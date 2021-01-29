@@ -1,10 +1,9 @@
 import React from 'react'
+import StoryBuilder from './containers/StoryBuilder'
 
 const App = () => {
 
-    return <div>
-        <h1>Choose Your Adventure Admin</h1>
-    </div>
+    return <StoryBuilder />
 }
 
 export default App
