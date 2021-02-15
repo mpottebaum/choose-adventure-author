@@ -1,30 +1,47 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import Row from './cmps/Row'
 
-const Container = styled.div`
+const Grid = ({
+    storyNodes,
+    gridViewCenter,
+    width,
+    height,
+    xCells,
+    yCells,
+}) => {
 
-`
+    console.log('storyNodes', storyNodes)
 
-const Grid = () => {
+    const renderRows = () => {
+        const rowNums = [...Array(yCells).keys()].map(i => i + 1)
+        const cellWidth = width / xCells
+        const cellHeight = height / yCells
+        return rowNums.map(( rowNum ) => (
+            <Row
+                key={rowNum}
+                cellWidth={cellWidth}
+                cellHeight={cellHeight}
+                rowNum={rowNum}
+                xCells={xCells}
+                storyNodes={storyNodes}
+            />
+        ))
+    }
 
-    return <Container>
-        {
-            cells.map(row => (
-                <Row cells={row} />
-            ))
-        }
-    </Container>
+    return <svg
+        version="1.1"
+        baseProfile="full"
+        width={width}
+        height={height}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="xMinYMin meet"
+    >
+        <g>
+            {renderRows()}
+        </g>
+    </svg>
 }
 
 export default Grid
-
-
-const cells = [
-    [ { name: '1A' }, { name: '1B' }, { name: '1C' }, { name: '1D' }, { name: '1E' }, ],
-    [ { name: '2A' }, { name: '2B' }, { name: '2C' }, { name: '2D' }, { name: '2E' }, ],
-    [ { name: '3A' }, { name: '3B' }, { name: '3C' }, { name: '3D' }, { name: '3E' }, ],
-    [ { name: '4A' }, { name: '4B' }, { name: '4C' }, { name: '4D' }, { name: '4E' }, ],
-    [ { name: '5A' }, { name: '5B' }, { name: '5C' }, { name: '5D' }, { name: '5E' }, ],
-]

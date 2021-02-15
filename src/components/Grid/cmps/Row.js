@@ -1,21 +1,38 @@
 import React from 'react'
-import styled from 'styled-components'
 
 import Cell from './Cell'
 
-const Container = styled.div`
-    display: flex;
-`
 
-const Row = ({ cells }) => (
-    <Container>
-        {
-            cells.map(cell => (
-                <Cell cell={cell} />
-            ))
-        }
-    </Container>
+const Row = ({
+    cellWidth,
+    cellHeight,
+    rowNum,
+    xCells,
+    storyNodes,
+}) => {
+
+    const renderCells = () => {
+        const colNums = [...Array(xCells).keys()].map(i => i)
+        return colNums.map(colNum => (
+            <Cell
+                key={`${rowNum}${colNum}`}
+                rowNum={rowNum}
+                colNum={colNum}
+                x={(colNum - 1) * cellWidth}
+                y={(rowNum - 1) * cellHeight}
+                width={cellWidth}
+                height={cellHeight}
+                stroke="black"
+                fill={"white"}
+                strokeWidth={1}
+                textSize={15}
+                text={""}
+            />
+        ))
+    }
+
+    return renderCells()
     
-)
+}
 
 export default Row
