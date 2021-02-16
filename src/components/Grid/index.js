@@ -11,22 +11,26 @@ const Grid = ({
     yCells,
 }) => {
 
-    console.log('storyNodes', storyNodes)
-
     const renderRows = () => {
         const rowNums = [...Array(yCells).keys()].map(i => i + 1)
+        const rowCenter = Math.ceil(yCells / 2)
         const cellWidth = width / xCells
         const cellHeight = height / yCells
-        return rowNums.map(( rowNum ) => (
-            <Row
-                key={rowNum}
-                cellWidth={cellWidth}
-                cellHeight={cellHeight}
-                rowNum={rowNum}
-                xCells={xCells}
-                storyNodes={storyNodes}
-            />
-        ))
+        return rowNums.map(( rowNum ) => {
+            const rowGridY = ((rowNum - rowCenter) * -1) + gridViewCenter.y
+            const rowNodes = storyNodes.filter(node => node.grid_y === rowGridY)
+            return (
+                <Row
+                    key={rowNum}
+                    cellWidth={cellWidth}
+                    cellHeight={cellHeight}
+                    rowNum={rowNum}
+                    xCells={xCells}
+                    rowNodes={rowNodes}
+                    gridViewCenterX={gridViewCenter.x}
+                />
+            )
+        })
     }
 
     return <svg
