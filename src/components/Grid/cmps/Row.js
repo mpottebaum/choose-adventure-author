@@ -31,7 +31,7 @@ const Row = ({
                     stroke="black"
                     fill={"white"}
                     strokeWidth={1}
-                    textSize={15}
+                    textSize={cellHeight / 3}
                     storyNode={storyNode}
                 />
             )
