@@ -12,7 +12,6 @@ const Cell = ({
     width,
     height,
     stroke,
-    fill,
     strokeWidth,
     textSize,
     storyNode,
@@ -24,6 +23,10 @@ const Cell = ({
         console.log(wrapText(storyNode.content, 17))
     }
     
+    const fillColor = () => {
+        if(storyNode) return storyNode.color || 'gray'
+        return 'white'
+    }
     
     return (
         <g>
@@ -34,7 +37,7 @@ const Cell = ({
                 width={width}
                 height={height}
                 stroke={stroke}
-                fill={fill}
+                fill={fillColor()}
                 strokeWidth={strokeWidth}
             />
             <text

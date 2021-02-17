@@ -29,7 +29,6 @@ const Row = ({
                     width={cellWidth}
                     height={cellHeight}
                     stroke="black"
-                    fill={"white"}
                     strokeWidth={1}
                     textSize={cellHeight / 3}
                     storyNode={storyNode}
