@@ -5,10 +5,10 @@ import { wrapText } from '../../../helpers/svgHelpers'
 // 1. wrapText: add code for first words longer than 17 chars
 
 const Cell = ({
-    rowNum,
-    colNum,
-    x,
-    y,
+    gridY,
+    gridX,
+    svgX,
+    svgY,
     width,
     height,
     stroke,
@@ -18,7 +18,7 @@ const Cell = ({
 }) => {
 
     if(storyNode) {
-        console.log('rowNum', rowNum, 'colNum', colNum)
+        console.log('gridY', gridY, 'gridX', gridX)
         console.log('node', storyNode)
         console.log(wrapText(storyNode.content, 17))
     }
@@ -31,9 +31,9 @@ const Cell = ({
     return (
         <g>
             <rect
-                id={`col${colNum}row${rowNum}`}
-                x={x}
-                y={y}
+                id={`x${gridX}y${gridY}`}
+                x={svgX}
+                y={svgY}
                 width={width}
                 height={height}
                 stroke={stroke}
@@ -42,15 +42,15 @@ const Cell = ({
             />
             <text
                 fontSize={textSize}
-                x={x + 5}
-                y={y + 4 + textSize}
+                x={svgX + 5}
+                y={svgY + 4 + textSize}
             >
                 {storyNode && wrapText(storyNode.content, 17).firstLine}
             </text>
             <text
                 fontSize={textSize}
-                x={x + 5}
-                y={y + 4 + (textSize * 2)}
+                x={svgX + 5}
+                y={svgY + 4 + (textSize * 2)}
             >
                 {storyNode && wrapText(storyNode.content, 17).secondLine}
             </text>
