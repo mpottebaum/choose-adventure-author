@@ -44,7 +44,6 @@ const Grid = ({
     const columns = createColumns()
 
     const choices = extractChoices()
-    console.log('choices', choices)
 
     return <svg
         version="1.1"
