@@ -38,6 +38,7 @@ const Cell = ({
                 height={height}
                 stroke={stroke}
                 fill={fillColor()}
+                fillOpacity={storyNode ? 0.7 : 0}
                 strokeWidth={strokeWidth}
             />
             <text

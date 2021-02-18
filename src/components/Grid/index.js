@@ -45,16 +45,16 @@ const Grid = ({
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMinYMin meet"
     >
-        <RowsLayer
-            cellWidth={cellWidth}
+        <LinesLayer
             cellHeight={cellHeight}
+            cellWidth={cellWidth}
             rows={rows}
             columns={columns}
             storyNodes={storyNodes}
         />
-        <LinesLayer
-            cellHeight={cellHeight}
+        <RowsLayer
             cellWidth={cellWidth}
+            cellHeight={cellHeight}
             rows={rows}
             columns={columns}
             storyNodes={storyNodes}
