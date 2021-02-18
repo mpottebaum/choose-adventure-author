@@ -1,7 +1,7 @@
 import React from 'react'
 
 import RowsLayer from './cmps/RowsLayer'
-// import LinesLayer from './cmps/LinesLayer'
+import LinesLayer from './cmps/LinesLayer'
 
 const Grid = ({
     storyNodes,
@@ -11,9 +11,6 @@ const Grid = ({
     xCells,
     yCells,
 }) => {
-
-    const cellHeight = height / yCells
-    const cellWidth = width / xCells
     
     const createRows = () => {
         const rowNums = [...Array(yCells).keys()].map(i => i + 1)
@@ -34,6 +31,11 @@ const Grid = ({
         }))
     }
 
+    const cellHeight = height / yCells
+    const cellWidth = width / xCells
+    const rows = createRows()
+    const columns = createColumns()
+
     return <svg
         version="1.1"
         baseProfile="full"
@@ -46,18 +48,17 @@ const Grid = ({
         <RowsLayer
             cellWidth={cellWidth}
             cellHeight={cellHeight}
-            rows={createRows()}
-            columns={createColumns()}
+            rows={rows}
+            columns={columns}
             storyNodes={storyNodes}
         />
-        {/* <LinesLayer
-            width={width}
-            height={height}
-            yCells={yCells}
-            xCells={xCells}
-            gridViewCenter={gridViewCenter}
+        <LinesLayer
+            cellHeight={cellHeight}
+            cellWidth={cellWidth}
+            rows={rows}
+            columns={columns}
             storyNodes={storyNodes}
-        /> */}
+        />
     </svg>
 }
 
