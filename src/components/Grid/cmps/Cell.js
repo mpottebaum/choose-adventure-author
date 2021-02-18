@@ -1,40 +1,58 @@
 import React from 'react'
+import { wrapText } from '../../../helpers/svgHelpers'
+
+// TO DO:
+// 1. wrapText: add code for first words longer than 17 chars
 
 const Cell = ({
-    rowNum,
-    colNum,
-    x,
-    y,
+    gridY,
+    gridX,
+    svgX,
+    svgY,
     width,
     height,
     stroke,
-    fill,
     strokeWidth,
     textSize,
     storyNode,
 }) => {
+
     if(storyNode) {
-        console.log('rowNum', rowNum, 'colNum', colNum)
+        console.log('gridY', gridY, 'gridX', gridX)
         console.log('node', storyNode)
+        console.log(wrapText(storyNode.content, 17))
     }
+    
+    const fillColor = () => {
+        if(storyNode) return storyNode.color || 'gray'
+        return 'white'
+    }
+    
     return (
         <g>
             <rect
-                id={`col${colNum}row${rowNum}`}
-                x={x}
-                y={y}
+                id={`x${gridX}y${gridY}`}
+                x={svgX}
+                y={svgY}
                 width={width}
                 height={height}
                 stroke={stroke}
-                fill={fill}
+                fill={fillColor()}
                 strokeWidth={strokeWidth}
             />
             <text
                 fontSize={textSize}
-                x={x}
-                y={y + textSize}
+                x={svgX + 5}
+                y={svgY + 4 + textSize}
             >
-                {storyNode && storyNode.content}
+                {storyNode && wrapText(storyNode.content, 17).firstLine}
+            </text>
+            <text
+                fontSize={textSize}
+                x={svgX + 5}
+                y={svgY + 4 + (textSize * 2)}
+            >
+                {storyNode && wrapText(storyNode.content, 17).secondLine}
             </text>
         </g>
     )

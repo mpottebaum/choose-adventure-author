@@ -6,33 +6,31 @@ import Cell from './Cell'
 const Row = ({
     cellWidth,
     cellHeight,
-    rowNum,
-    xCells,
     rowNodes,
-    gridViewCenterX,
+    row,
+    columns,
+
 }) => {
 
     const renderCells = () => {
-        const colNums = [...Array(xCells).keys()].map(i => i + 1)
-        const colCenter = Math.ceil(xCells / 2)
-        return colNums.map(colNum => {
-            const colGridX = (colNum - colCenter) + gridViewCenterX
-            // console.log("colGridX", colGridX)
-            const storyNode = rowNodes.find(node => node.grid_x === colGridX)
+        return columns.map(column => {
+            const storyNode = rowNodes.find(node => node.grid_x === column.coordinateNum)
             return (
                 <Cell
-                    key={`${rowNum}${colNum}`}
-                    rowNum={rowNum}
-                    colNum={colNum}
-                    x={(colNum - 1) * cellWidth}
-                    y={(rowNum - 1) * cellHeight}
+                    key={`${row.rowNum}${column.colNum}`}
+                    gridY={row.coordinateNum}
+                    gridX={column.coordinateNum}
+                    svgX={(column.colNum - 1) * cellWidth}
+                    svgY={(row.rowNum - 1) * cellHeight}
                     width={cellWidth}
                     height={cellHeight}
                     stroke="black"
-                    fill={"white"}
                     strokeWidth={1}
-                    textSize={15}
+                    textSize={cellHeight / 3}
                     storyNode={storyNode}
+
+
+
                 />
             )
         })

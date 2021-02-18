@@ -1,6 +1,7 @@
 import React from 'react'
 
-import Row from './cmps/Row'
+import RowsLayer from './cmps/RowsLayer'
+import LinesLayer from './cmps/LinesLayer'
 
 const Grid = ({
     storyNodes,
@@ -10,28 +11,30 @@ const Grid = ({
     xCells,
     yCells,
 }) => {
-
-    const renderRows = () => {
+    
+    const createRows = () => {
         const rowNums = [...Array(yCells).keys()].map(i => i + 1)
-        const rowCenter = Math.ceil(yCells / 2)
-        const cellWidth = width / xCells
-        const cellHeight = height / yCells
-        return rowNums.map(( rowNum ) => {
-            const rowGridY = ((rowNum - rowCenter) * -1) + gridViewCenter.y
-            const rowNodes = storyNodes.filter(node => node.grid_y === rowGridY)
-            return (
-                <Row
-                    key={rowNum}
-                    cellWidth={cellWidth}
-                    cellHeight={cellHeight}
-                    rowNum={rowNum}
-                    xCells={xCells}
-                    rowNodes={rowNodes}
-                    gridViewCenterX={gridViewCenter.x}
-                />
-            )
-        })
+        const centerRowNum = Math.ceil(yCells / 2)
+        return rowNums.map(rowNum => ({
+            rowNum,
+            coordinateNum: ((rowNum - centerRowNum) * -1) + gridViewCenter.y
+        })) 
     }
+
+
+    const createColumns = () => {
+        const colNums = [...Array(xCells).keys()].map(i => i + 1)
+        const centerColNum = Math.ceil(xCells / 2)
+        return colNums.map(colNum => ({
+            colNum,
+            coordinateNum: (colNum - centerColNum) + gridViewCenter.x
+        }))
+    }
+
+    const cellHeight = height / yCells
+    const cellWidth = width / xCells
+    const rows = createRows()
+    const columns = createColumns()
 
     return <svg
         version="1.1"
@@ -42,9 +45,20 @@ const Grid = ({
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMinYMin meet"
     >
-        <g>
-            {renderRows()}
-        </g>
+        <RowsLayer
+            cellWidth={cellWidth}
+            cellHeight={cellHeight}
+            rows={rows}
+            columns={columns}
+            storyNodes={storyNodes}
+        />
+        <LinesLayer
+            cellHeight={cellHeight}
+            cellWidth={cellWidth}
+            rows={rows}
+            columns={columns}
+            storyNodes={storyNodes}
+        />
     </svg>
 }
 
