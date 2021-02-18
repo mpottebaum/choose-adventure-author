@@ -7,6 +7,7 @@ const Row = ({
     cellWidth,
     cellHeight,
     rowNodes,
+    rowChoices,
     row,
     columns,
 
@@ -15,6 +16,7 @@ const Row = ({
     const renderCells = () => {
         return columns.map(column => {
             const storyNode = rowNodes.find(node => node.grid_x === column.coordinateNum)
+            const choice = rowChoices.find(choice => choice.grid_x === column.coordinateNum)
             return (
                 <Cell
                     key={`${row.rowNum}${column.colNum}`}
@@ -28,9 +30,7 @@ const Row = ({
                     strokeWidth={1}
                     textSize={cellHeight / 3}
                     storyNode={storyNode}
-
-
-
+                    choice={choice}
                 />
             )
         })

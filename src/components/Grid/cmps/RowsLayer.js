@@ -8,10 +8,12 @@ const RowsLayer = ({
     rows,
     columns,
     storyNodes,
+    choices,
 }) => {
     const renderRows = () => {
         return rows.map(( row ) => {
             const rowNodes = storyNodes.filter(node => node.grid_y === row.coordinateNum)
+            const rowChoices = choices.filter(choice => choice.grid_y === row.coordinateNum)
             return (
                 <Row
                     key={row.rowNum}
@@ -20,6 +22,7 @@ const RowsLayer = ({
                     row={row}
                     columns={columns}
                     rowNodes={rowNodes}
+                    rowChoices={rowChoices}
                 />
             )
         })

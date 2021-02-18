@@ -11,6 +11,13 @@ const Grid = ({
     xCells,
     yCells,
 }) => {
+
+    const extractChoices = () => (
+        storyNodes.reduce(
+                (choicesArray, node) => [ ...choicesArray, ...node.choices ],
+                []
+            )
+    )
     
     const createRows = () => {
         const rowNums = [...Array(yCells).keys()].map(i => i + 1)
@@ -36,6 +43,9 @@ const Grid = ({
     const rows = createRows()
     const columns = createColumns()
 
+    const choices = extractChoices()
+    console.log('choices', choices)
+
     return <svg
         version="1.1"
         baseProfile="full"
@@ -51,6 +61,7 @@ const Grid = ({
             rows={rows}
             columns={columns}
             storyNodes={storyNodes}
+            choices={choices}
         />
         <RowsLayer
             cellWidth={cellWidth}
@@ -58,6 +69,7 @@ const Grid = ({
             rows={rows}
             columns={columns}
             storyNodes={storyNodes}
+            choices={choices}
         />
     </svg>
 }
