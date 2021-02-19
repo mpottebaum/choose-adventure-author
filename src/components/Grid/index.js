@@ -4,7 +4,6 @@ import RowsLayer from './cmps/RowsLayer'
 import LinesLayer from './cmps/LinesLayer'
 
 const Grid = ({
-    storyNodes,
     gridViewCenter,
     width,
     height,
@@ -45,19 +44,17 @@ const Grid = ({
         viewBox={`0 0 ${width} ${height}`}
         preserveAspectRatio="xMinYMin meet"
     >
-        <RowsLayer
-            cellWidth={cellWidth}
-            cellHeight={cellHeight}
-            rows={rows}
-            columns={columns}
-            storyNodes={storyNodes}
-        />
         <LinesLayer
             cellHeight={cellHeight}
             cellWidth={cellWidth}
             rows={rows}
             columns={columns}
-            storyNodes={storyNodes}
+        />
+        <RowsLayer
+            cellWidth={cellWidth}
+            cellHeight={cellHeight}
+            rows={rows}
+            columns={columns}
         />
     </svg>
 }
