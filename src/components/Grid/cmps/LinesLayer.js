@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import Line from './Line'
 
@@ -7,9 +8,10 @@ const LinesLayer = ({
     cellHeight,
     rows,
     columns,
-    storyNodes,
-    choices,
 }) => {
+
+    const storyNodes = useSelector(state => state.storyNodes)
+    const choices = useSelector(state => state.choices)
 
     const getLinePositionCoordinates = ( node, isNextNode=false) => {
         const column = columns.find(col => col.coordinateNum === node.grid_x)

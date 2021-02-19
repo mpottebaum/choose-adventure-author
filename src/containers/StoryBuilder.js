@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { useDispatch } from 'react-redux'
+
+import { setStoryNodes } from '../store/storyNodes/actions'
+import { setChoices } from '../store/choices/actions'
 
 import Toolbar from '../components/Toolbar'
 import Grid from '../components/Grid'
@@ -12,7 +16,8 @@ const Container = styled.div`
 
 const StoryBuilder = () => {
 
-    const [ storyNodes, setStoryNodes ] = useState([])
+    const dispatch = useDispatch()
+
     const [ gridViewCenter, setGridViewCenter] = useState({
         x: 0,
         y: 0
@@ -23,18 +28,26 @@ const StoryBuilder = () => {
         getStory()
     }, [])
 
+    const extractChoices = storyNodes => (
+        storyNodes.reduce(
+                (choicesArray, node) => [ ...choicesArray, ...node.choices ],
+                []
+            )
+    )
+
     const getStory = async () => {
         axios('http://localhost:3000/story-nodes?story_id=1')
             .then(storyNodesResp => {
                 const onlyNodesWithCoordinates = storyNodesResp.data.filter(node => node.grid_x && node.grid_y)
-                setStoryNodes(onlyNodesWithCoordinates)
+                dispatch(setStoryNodes(onlyNodesWithCoordinates))
+                const choices = extractChoices(onlyNodesWithCoordinates)
+                dispatch(setChoices(choices))
             })
     }
 
 
     return <Container>
         <Grid
-            storyNodes={storyNodes}
             gridViewCenter={gridViewCenter}
             width={850}
             height={650}

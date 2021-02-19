@@ -4,20 +4,12 @@ import RowsLayer from './cmps/RowsLayer'
 import LinesLayer from './cmps/LinesLayer'
 
 const Grid = ({
-    storyNodes,
     gridViewCenter,
     width,
     height,
     xCells,
     yCells,
 }) => {
-
-    const extractChoices = () => (
-        storyNodes.reduce(
-                (choicesArray, node) => [ ...choicesArray, ...node.choices ],
-                []
-            )
-    )
     
     const createRows = () => {
         const rowNums = [...Array(yCells).keys()].map(i => i + 1)
@@ -43,8 +35,6 @@ const Grid = ({
     const rows = createRows()
     const columns = createColumns()
 
-    const choices = extractChoices()
-
     return <svg
         version="1.1"
         baseProfile="full"
@@ -59,16 +49,12 @@ const Grid = ({
             cellWidth={cellWidth}
             rows={rows}
             columns={columns}
-            storyNodes={storyNodes}
-            choices={choices}
         />
         <RowsLayer
             cellWidth={cellWidth}
             cellHeight={cellHeight}
             rows={rows}
             columns={columns}
-            storyNodes={storyNodes}
-            choices={choices}
         />
     </svg>
 }

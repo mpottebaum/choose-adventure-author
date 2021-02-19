@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import Row from './Row'
 
@@ -7,9 +8,11 @@ const RowsLayer = ({
     cellHeight,
     rows,
     columns,
-    storyNodes,
-    choices,
 }) => {
+
+    const storyNodes = useSelector(state => state.storyNodes)
+    const choices = useSelector(state => state.choices)
+
     const renderRows = () => {
         return rows.map(( row ) => {
             const rowNodes = storyNodes.filter(node => node.grid_y === row.coordinateNum)
