@@ -1,19 +1,21 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import RowsLayer from './cmps/RowsLayer'
 import LinesLayer from './cmps/LinesLayer'
 
 const Grid = ({
-    gridViewCenter,
     width,
     height,
-    xCells,
-    yCells,
+    numCols,
+    numRows,
 }) => {
+
+    const gridViewCenter = useSelector(state => state.gridViewCenter)
     
     const createRows = () => {
-        const rowNums = [...Array(yCells).keys()].map(i => i + 1)
-        const centerRowNum = Math.ceil(yCells / 2)
+        const rowNums = [...Array(numRows).keys()].map(i => i + 1)
+        const centerRowNum = Math.ceil(numRows / 2)
         return rowNums.map(rowNum => ({
             rowNum,
             coordinateNum: ((rowNum - centerRowNum) * -1) + gridViewCenter.y
@@ -22,16 +24,16 @@ const Grid = ({
 
 
     const createColumns = () => {
-        const colNums = [...Array(xCells).keys()].map(i => i + 1)
-        const centerColNum = Math.ceil(xCells / 2)
+        const colNums = [...Array(numCols).keys()].map(i => i + 1)
+        const centerColNum = Math.ceil(numCols / 2)
         return colNums.map(colNum => ({
             colNum,
             coordinateNum: (colNum - centerColNum) + gridViewCenter.x
         }))
     }
 
-    const cellHeight = height / yCells
-    const cellWidth = width / xCells
+    const cellHeight = height / numRows
+    const cellWidth = width / numCols
     const rows = createRows()
     const columns = createColumns()
 

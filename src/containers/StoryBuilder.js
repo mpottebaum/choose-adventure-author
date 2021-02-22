@@ -18,10 +18,6 @@ const StoryBuilder = () => {
 
     const dispatch = useDispatch()
 
-    const [ gridViewCenter, setGridViewCenter] = useState({
-        x: 0,
-        y: 0
-    })
     const [ storyNodeModal, setStoryNodeModal ] = useState(false)
 
     useEffect(() => {
@@ -48,11 +44,10 @@ const StoryBuilder = () => {
 
     return <Container>
         <Grid
-            gridViewCenter={gridViewCenter}
             width={850}
             height={650}
-            xCells={7}
-            yCells={15}
+            numCols={7}
+            numRows={15}
         />
         <Toolbar />
         <ReactModal
