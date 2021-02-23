@@ -25,16 +25,16 @@ const Cell = ({
         return 'white'
     }
     
-    if(storyNode) {
-        console.log('gridY', gridY, 'gridX', gridX)
-        console.log('node', storyNode)
-        console.log(wrapText(storyNode.content, 17))
-    }
-    if(choice) {
-        console.log('gridY', gridY, 'gridX', gridX)
-        console.log('choice', choice)
-        console.log(wrapText(choice.content, 17))
-    }
+    // if(storyNode) {
+    //     console.log('gridY', gridY, 'gridX', gridX)
+    //     console.log('node', storyNode)
+    //     console.log(wrapText(storyNode.content, 17))
+    // }
+    // if(choice) {
+    //     console.log('gridY', gridY, 'gridX', gridX)
+    //     console.log('choice', choice)
+    //     console.log(wrapText(choice.content, 17))
+    // }
     return (
         <g>
             <rect

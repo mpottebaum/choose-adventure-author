@@ -14,8 +14,8 @@ const Grid = ({
     const gridViewCenter = useSelector(state => state.gridViewCenter)
     
     const createRows = () => {
-        const rowNums = [...Array(numRows).keys()].map(i => i + 1)
-        const centerRowNum = Math.ceil(numRows / 2)
+        const rowNums = [...Array(numRows).keys()].map(i => i)
+        const centerRowNum = Math.floor(numRows / 2)
         return rowNums.map(rowNum => ({
             rowNum,
             coordinateNum: ((rowNum - centerRowNum) * -1) + gridViewCenter.y
@@ -24,8 +24,8 @@ const Grid = ({
 
 
     const createColumns = () => {
-        const colNums = [...Array(numCols).keys()].map(i => i + 1)
-        const centerColNum = Math.ceil(numCols / 2)
+        const colNums = [...Array(numCols).keys()].map(i => i)
+        const centerColNum = Math.floor(numCols / 2)
         return colNums.map(colNum => ({
             colNum,
             coordinateNum: (colNum - centerColNum) + gridViewCenter.x

@@ -32,11 +32,10 @@ const StoryBuilder = () => {
     )
 
     const getStory = async () => {
-        axios('http://localhost:3000/story-nodes?story_id=1')
+        axios('http://localhost:3000/story-nodes?story_id=5')
             .then(storyNodesResp => {
-                const onlyNodesWithCoordinates = storyNodesResp.data.filter(node => node.grid_x && node.grid_y)
-                dispatch(setStoryNodes(onlyNodesWithCoordinates))
-                const choices = extractChoices(onlyNodesWithCoordinates)
+                dispatch(setStoryNodes(storyNodesResp.data))
+                const choices = extractChoices(storyNodesResp.data)
                 dispatch(setChoices(choices))
             })
     }
