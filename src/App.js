@@ -1,8 +1,10 @@
 import React from 'react'
-import StoryBuilder from './containers/StoryBuilder'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './store/index'
+
+import StoryBuilder from './containers/StoryBuilder'
+import Modal from './containers/Modal'
 
 const store = createStore(
     rootReducer,
@@ -14,6 +16,7 @@ const App = () => {
     return (
         <Provider store={store}>
             <StoryBuilder />
+            <Modal />
         </Provider>
     )
 }
