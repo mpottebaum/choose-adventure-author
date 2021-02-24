@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
-import gridReducer from './grid'
+import gridViewCenterReducer from './gridViewCenter'
 import storyNodesReducer from './storyNodes'
 import choicesReducer from './choices'
+import modalReducer from './modal'
+import selStoryNodeIdReducer from './selStoryNodeId'
 
 const rootReducer = combineReducers({
-    grid: gridReducer,
+    gridViewCenter: gridViewCenterReducer,
     storyNodes: storyNodesReducer,
     choices: choicesReducer,
+    modal: modalReducer,
+    selStoryNodeId: selStoryNodeIdReducer,
 })
 
 export default rootReducer
