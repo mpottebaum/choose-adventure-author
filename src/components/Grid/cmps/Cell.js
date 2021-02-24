@@ -42,10 +42,11 @@ const Cell = ({
     const onCellClick = () => {
         if(storyNode) {
             dispatch(selectStoryNode(storyNode.id))
+            dispatch(openModal(showStoryNodeModal))
         } else if(choice) {
             dispatch(selectStoryNode(choice.story_node_id))
+            dispatch(openModal(showStoryNodeModal))
         }
-        dispatch(openModal(showStoryNodeModal))
     }
 
 

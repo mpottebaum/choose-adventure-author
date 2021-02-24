@@ -7,6 +7,12 @@ import ReactModal from 'react-modal'
 
 import ShowStoryNodeModal from '../components/modals/ShowStoryNodeModal'
 
+const customStyles = {
+    content: {
+        height: 'fit-content',
+    },
+}
+
 const Modal = () => {
     const { modal } = useSelector(state => state)
     const dispatch = useDispatch()
@@ -27,10 +33,11 @@ const Modal = () => {
     }
     return (
         <ReactModal
-            isOpen={modal}
+            isOpen={!!modal}
             shouldCloseOnOverlayClick={true}
             onRequestClose={onClose}
             ariaHideApp={false}
+            style={customStyles}
         >
             {renderModal()}
         </ReactModal>
