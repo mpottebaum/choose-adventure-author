@@ -24,6 +24,7 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     const [ isEditing, setIsEditing ] = useState(createNode)
     const [ nodeName, setNodeName ] = useState(createNode ? '' : storyNode.name)
     const [ nodeContent, setNodeContent ] = useState(createNode ? '' : storyNode.content)
+    const [ nodeChoices, setNodeChoices ] = useState(createNode ? [] : storyNode.choices)
 
     const onSaveEdit = () => {
         console.log('save edit')
@@ -49,10 +50,36 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     const renderChoices = () => {
         if(storyNode.choices.length > 0) {
             return storyNode.choices.map(choice => (
-                <li>
+                <li key={choice.id}>
                     <p>{choice.content}</p>
                 </li>
             ))
+        }
+    }
+
+    const onChoiceChange = (e, i) => {
+        setNodeChoices(
+            nodeChoices.map((choice, choiceIndex) => {
+                if(choiceIndex === i) {
+                    return {
+                        ...choice,
+                        content: e.target.value,
+                    }
+                }
+                return choice
+            })
+        )
+    }
+
+    const renderChoiceInputs = () => {
+        if(nodeChoices.length > 0) {
+            return nodeChoices.map((choice, i) => {
+                return <Input
+                    name='choice'
+                    onChange={e => onChoiceChange(e, i)}
+                    value={choice.content}
+                />
+            })
         }
     }
     return (
@@ -68,6 +95,8 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
                     onChange={e => setNodeContent(e.target.value)}
                     value={nodeContent}
                 />
+                {renderChoiceInputs()}
+                <Button onClick={() => setNodeChoices([...nodeChoices, {content: ''}])}>Add Choice</Button>
                 <Button onClick={onSaveEdit}>SAVE</Button>
                 <Button onClick={createNode ? onCancelCreate : onCancelEdit}>CANCEL</Button>
             </>
