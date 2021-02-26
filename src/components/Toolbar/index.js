@@ -1,11 +1,18 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    setGridViewX,
+    setGridViewY
+} from '../../store/gridViewCenter/actions'
 
 const Toolbar = () => {
+    const { gridViewCenter } = useSelector(state => state)
+    const dispatch = useDispatch()
     return <div>
-        <button>^</button>
-        <button>v</button>
-        <button>&lt;</button>
-        <button>&gt;</button>
+        <button onClick={() => dispatch(setGridViewY(gridViewCenter.y + 1))}>^</button>
+        <button onClick={() => dispatch(setGridViewY(gridViewCenter.y - 1))}>v</button>
+        <button onClick={() => dispatch(setGridViewX(gridViewCenter.x - 1))}>&lt;</button>
+        <button onClick={() => dispatch(setGridViewX(gridViewCenter.x + 1))}>&gt;</button>
     </div>
 }
 
