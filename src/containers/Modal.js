@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../store/modal/actions'
-import { storyNodeModal } from '../constants/modals'
+import { storyNodeModal, createStoryNodeModal } from '../constants/modals'
 
 import ReactModal from 'react-modal'
 
@@ -25,6 +25,13 @@ const Modal = () => {
                 return (
                     <StoryNodeModal
                         onClose={onClose}
+                    />
+                )
+            case createStoryNodeModal:
+                return (
+                    <StoryNodeModal
+                        onClose={onClose}
+                        createNode
                     />
                 )
             default:

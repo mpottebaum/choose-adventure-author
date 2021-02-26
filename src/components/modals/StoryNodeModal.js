@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { clearStoryNodeCoordinates } from '../../store/newStoryNodeCoordinates/actions'
 
 const Input = styled.input`
 
@@ -14,25 +15,30 @@ const Button = styled.button`
 
 `
 
-const StoryNodeModal = ({ onClose, startInEdit=false }) => {
-    const { storyNodes, selStoryNodeId, modal } = useSelector(state => state)
+const StoryNodeModal = ({ onClose, createNode=false }) => { 
+    const { storyNodes, selStoryNodeId, newStoryNodeCoordinates } = useSelector(state => state)
     const storyNode = storyNodes.find(node => node.id === selStoryNodeId)
+    
+    const dispatch = useDispatch()
 
-    const { name, content } = storyNode
-
-    const [ isEditing, setIsEditing ] = useState(startInEdit)
-    const [ nodeName, setNodeName ] = useState(name)
-    const [ nodeContent, setNodeContent ] = useState(content)
+    const [ isEditing, setIsEditing ] = useState(createNode)
+    const [ nodeName, setNodeName ] = useState(createNode ? '' : storyNode.name)
+    const [ nodeContent, setNodeContent ] = useState(createNode ? '' : storyNode.content)
 
     const onSaveEdit = () => {
         console.log('save edit')
-        onClose()
+        setIsEditing(false)
     }
 
     const onCancelEdit = () => {
         setIsEditing(false)
-        setNodeName(name)
-        setNodeContent(content)
+        setNodeName(storyNode.name)
+        setNodeContent(storyNode.content)
+    }
+
+    const onCancelCreate = () => {
+        onClose()
+        dispatch(clearStoryNodeCoordinates())
     }
 
     const onDeleteNode = () => {
@@ -63,12 +69,12 @@ const StoryNodeModal = ({ onClose, startInEdit=false }) => {
                     value={nodeContent}
                 />
                 <Button onClick={onSaveEdit}>SAVE</Button>
-                <Button onClick={onCancelEdit}>CANCEL</Button>
+                <Button onClick={createNode ? onCancelCreate : onCancelEdit}>CANCEL</Button>
             </>
         ) : (
             <>
-                <h1>{name}</h1>
-                <p>{content}</p>
+                <h1>{storyNode && storyNode.name}</h1>
+                <p>{storyNode && storyNode.content}</p>
                 <ul>
                     {renderChoices()}
                 </ul>

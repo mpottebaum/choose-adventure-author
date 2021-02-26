@@ -3,7 +3,8 @@ import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
 import { selectStoryNode } from '../../../store/selStoryNodeId/actions'
-import { storyNodeModal } from '../../../constants/modals'
+import { setStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
+import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
 
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
@@ -46,6 +47,10 @@ const Cell = ({
         } else if(choice) {
             dispatch(selectStoryNode(choice.story_node_id))
             dispatch(openModal(storyNodeModal))
+        } else {
+            const coordinates = { x: gridX, y: gridY }
+            dispatch(setStoryNodeCoordinates(coordinates))
+            dispatch(openModal(createStoryNodeModal))
         }
     }
 
