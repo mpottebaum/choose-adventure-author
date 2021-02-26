@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../store/modal/actions'
-import { showStoryNodeModal } from '../constants/modals'
+import { storyNodeModal } from '../constants/modals'
 
 import ReactModal from 'react-modal'
 
-import ShowStoryNodeModal from '../components/modals/ShowStoryNodeModal'
+import StoryNodeModal from '../components/modals/StoryNodeModal'
 
 const customStyles = {
     content: {
@@ -21,9 +21,9 @@ const Modal = () => {
 
     const renderModal = () => {
         switch(modal) {
-            case showStoryNodeModal:
+            case storyNodeModal:
                 return (
-                    <ShowStoryNodeModal
+                    <StoryNodeModal
                         onClose={onClose}
                     />
                 )

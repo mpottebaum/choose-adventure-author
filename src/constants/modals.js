@@ -1,1 +1,1 @@
-export const showStoryNodeModal = 'ShowStoryNodeModal'
+export const storyNodeModal = 'StoryNodeModal'
