@@ -73,7 +73,7 @@ const Cell = ({
                 x={svgX + 5}
                 y={svgY + 4 + textSize}
             >
-                {storyNode && wrapText(storyNode.content, 17).firstLine}
+                {storyNode && wrapText(storyNode.name, 17).firstLine}
                 {choice && wrapText(choice.content, 17).firstLine}
             </text>
             <text
@@ -81,7 +81,7 @@ const Cell = ({
                 x={svgX + 5}
                 y={svgY + 4 + (textSize * 2)}
             >
-                {storyNode && wrapText(storyNode.content, 17).secondLine}
+                {storyNode && wrapText(storyNode.name, 17).secondLine}
                 {choice && wrapText(choice.content, 17).secondLine}
             </text>
         </g>
