@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { lineCoordinatesFactory } from '../../../helpers/svgHelpers'
+import { extractChoices } from '../../../helpers/storeHelpers'
 
 import Line from './Line'
 
@@ -12,7 +13,7 @@ const LinesLayer = ({
 }) => {
 
     const storyNodes = useSelector(state => state.storyNodes)
-    const choices = useSelector(state => state.choices)
+    const choices = extractChoices(storyNodes)
 
     const getLinePositionCoordinates = lineCoordinatesFactory(columns, rows, cellWidth, cellHeight)
 

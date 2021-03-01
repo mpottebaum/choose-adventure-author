@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import { extractChoices } from '../../../helpers/storeHelpers'
+
 import Row from './Row'
 
 const RowsLayer = ({
@@ -11,7 +13,7 @@ const RowsLayer = ({
 }) => {
 
     const storyNodes = useSelector(state => state.storyNodes)
-    const choices = useSelector(state => state.choices)
+    const choices = extractChoices(storyNodes)
 
     const renderRows = () => {
         return rows.map(( row ) => {
