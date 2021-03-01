@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import axios from 'axios'
 
-import { createStoryNodeApi } from '../../constants/apiRoutes'
+import { createStoryNodeApi, updateStoryNodeApi } from '../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../store/newStoryNodeCoordinates/actions'
-import { addStoryNode } from '../../store/storyNodes/actions'
+import { addStoryNode, editStoryNode } from '../../store/storyNodes/actions'
 
 const Input = styled.input`
 
@@ -58,8 +58,20 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     }
 
     const onSaveEdit = () => {
-        console.log('save edit')
-        setIsEditing(false)
+        axios({
+            method: 'PUT',
+            url: updateStoryNodeApi(selStoryNodeId),
+            data: {
+                story_id: 5,
+                name: nodeName,
+                content: nodeContent,
+                choices_attributes: nodeChoices,
+            }
+        })
+        .then(editNodeResp => {
+            dispatch(editStoryNode(editNodeResp.data))
+            setIsEditing(false)
+        })
     }
 
     const onCancelEdit = () => {
