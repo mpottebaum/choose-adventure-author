@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import axios from 'axios'
 
-import { createStoryNodeApi, updateStoryNodeApi } from '../../constants/apiRoutes'
+import { createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../store/newStoryNodeCoordinates/actions'
-import { addStoryNode, editStoryNode } from '../../store/storyNodes/actions'
+import { addStoryNode, editStoryNode, deleteStoryNode } from '../../store/storyNodes/actions'
 
 const Input = styled.input`
 
@@ -86,8 +86,15 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     }
 
     const onDeleteNode = () => {
-        console.log('delete node')
-        onClose()
+        axios({
+            method: 'DELETE',
+            url: deleteStoryNodeApi(selStoryNodeId),
+        })
+        .then(deleteNodeResp => {
+            console.log(deleteNodeResp.data)
+            onClose()
+            dispatch(deleteStoryNode(selStoryNodeId))
+        })
     }
 
     const renderChoices = () => {

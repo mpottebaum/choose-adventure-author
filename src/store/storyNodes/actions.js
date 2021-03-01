@@ -1,7 +1,8 @@
 import {
     SET_STORY_NODES,
     ADD_STORY_NODE,
-    EDIT_STORY_NODE
+    EDIT_STORY_NODE,
+    DELETE_STORY_NODE
 } from './index'
 
 export const setStoryNodes = storyNodes => ({
@@ -17,4 +18,9 @@ export const addStoryNode = storyNode => ({
 export const editStoryNode = storyNode => ({
     type: EDIT_STORY_NODE,
     storyNode,
+})
+
+export const deleteStoryNode = storyNodeId => ({
+    type: DELETE_STORY_NODE,
+    storyNodeId,
 })
