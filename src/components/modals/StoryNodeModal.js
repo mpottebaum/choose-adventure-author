@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import axios from 'axios'
+
+import { createStoryNodeApi } from '../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../store/newStoryNodeCoordinates/actions'
+import { addStoryNode } from '../../store/storyNodes/actions'
 
 const Input = styled.input`
 
@@ -25,6 +29,33 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     const [ nodeName, setNodeName ] = useState(createNode ? '' : storyNode.name)
     const [ nodeContent, setNodeContent ] = useState(createNode ? '' : storyNode.content)
     const [ nodeChoices, setNodeChoices ] = useState(createNode ? [] : storyNode.choices)
+
+
+    const onSaveCreate = () => {
+        axios({
+            method: 'POST',
+            url: createStoryNodeApi,
+            data: {
+                story_node: {
+                    story_id: 5,
+                    name: nodeName,
+                    content: nodeContent,
+                    grid_x: newStoryNodeCoordinates.x,
+                    grid_y: newStoryNodeCoordinates.y,
+                    choices_attributes: nodeChoices,
+                }
+            }
+        })
+        .then(createNodeResp => {
+            console.log(createNodeResp.data)
+            dispatch(addStoryNode(createNodeResp.data))
+            dispatch(clearStoryNodeCoordinates())
+            onClose()
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
 
     const onSaveEdit = () => {
         console.log('save edit')
@@ -97,7 +128,7 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
                 />
                 {renderChoiceInputs()}
                 <Button onClick={() => setNodeChoices([...nodeChoices, {content: ''}])}>Add Choice</Button>
-                <Button onClick={onSaveEdit}>SAVE</Button>
+                <Button onClick={createNode ? onSaveCreate : onSaveEdit}>SAVE</Button>
                 <Button onClick={createNode ? onCancelCreate : onCancelEdit}>CANCEL</Button>
             </>
         ) : (

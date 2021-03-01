@@ -3,8 +3,8 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 
+import { getStoryNodesApi } from '../constants/apiRoutes'
 import { setStoryNodes } from '../store/storyNodes/actions'
-import { setChoices } from '../store/choices/actions'
 
 import Toolbar from '../components/Toolbar'
 import Grid from '../components/Grid'
@@ -24,19 +24,10 @@ const StoryBuilder = () => {
         getStory()
     }, [])
 
-    const extractChoices = storyNodes => (
-        storyNodes.reduce(
-                (choicesArray, node) => [ ...choicesArray, ...node.choices ],
-                []
-            )
-    )
-
     const getStory = async () => {
-        axios('http://localhost:3000/story-nodes?story_id=5')
+        axios(getStoryNodesApi(5))
             .then(storyNodesResp => {
                 dispatch(setStoryNodes(storyNodesResp.data))
-                const choices = extractChoices(storyNodesResp.data)
-                dispatch(setChoices(choices))
             })
     }
 
