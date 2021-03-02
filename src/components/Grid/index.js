@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import RowsLayer from './cmps/RowsLayer'
 import LinesLayer from './cmps/LinesLayer'
+import SelectedCellLayer from './cmps/SelectedCellLayer'
 
 const Grid = ({
     width,
@@ -53,6 +54,12 @@ const Grid = ({
             columns={columns}
         />
         <RowsLayer
+            cellWidth={cellWidth}
+            cellHeight={cellHeight}
+            rows={rows}
+            columns={columns}
+        />
+        <SelectedCellLayer
             cellWidth={cellWidth}
             cellHeight={cellHeight}
             rows={rows}

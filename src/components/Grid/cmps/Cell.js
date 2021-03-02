@@ -2,8 +2,8 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
-import { selectStoryNode } from '../../../store/selStoryNodeId/actions'
-import { setStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
+import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
+import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
 
 // TO DO:
@@ -42,13 +42,16 @@ const Cell = ({
 
     const onCellClick = () => {
         if(storyNode) {
+            dispatch(clearStoryNodeCoordinates())
             dispatch(selectStoryNode(storyNode.id))
             dispatch(openModal(storyNodeModal))
         } else if(choice) {
+            dispatch(clearStoryNodeCoordinates())
             dispatch(selectStoryNode(choice.story_node_id))
             dispatch(openModal(storyNodeModal))
         } else {
             const coordinates = { x: gridX, y: gridY }
+            dispatch(deselectStoryNode())
             dispatch(setStoryNodeCoordinates(coordinates))
             dispatch(openModal(createStoryNodeModal))
         }
