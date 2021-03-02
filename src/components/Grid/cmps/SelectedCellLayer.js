@@ -1,5 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { openModal } from '../../../store/modal/actions'
+import { storyNodeModal } from '../../../constants/modals'
 
 const SelectedCellLayer = ({
     cellWidth,
@@ -9,16 +12,25 @@ const SelectedCellLayer = ({
 }) => {
 
     const { selStoryNodeId, storyNodes, newStoryNodeCoordinates } = useSelector(state => state)
-
     const storyNode = storyNodes.find(node => node.id === selStoryNodeId)
 
-    const selectedCell = storyNode || newStoryNodeCoordinates
+    const dispatch = useDispatch()
 
+    let selectedCell = null
+    if(storyNode) {
+        selectedCell = {
+            x: storyNode.grid_x,
+            y: storyNode.grid_y,
+        }
+    } else if(newStoryNodeCoordinates) {
+        selectedCell = newStoryNodeCoordinates
+    }
+    
     const xToSVG = gridX => {
         const column = columns.find(column => column.coordinateNum === gridX)
         return column.colNum * cellWidth
     }
-
+    
     const yToSVG = gridY => {
         const row = rows.find(row => row.coordinateNum === gridY)
         return row.rowNum * cellHeight
@@ -29,9 +41,10 @@ const SelectedCellLayer = ({
             {
                 selectedCell && (
                     <rect
+                        onClick={() => dispatch(openModal(storyNodeModal))}
                         id={`selected-cell`}
-                        x={xToSVG(selectedCell.grid_x || selectedCell.x)}
-                        y={yToSVG(selectedCell.grid_y || selectedCell.y)}
+                        x={xToSVG(selectedCell.x)}
+                        y={yToSVG(selectedCell.y)}
                         width={cellWidth}
                         height={cellHeight}
                         stroke={'green'}

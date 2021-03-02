@@ -36,12 +36,11 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
         choices: null,
     })
 
-    // useEffect(() => {
-    //     return () => {
-    //         dispatch(clearStoryNodeCoordinates())
-    //         dispatch(deselectStoryNode())
-    //     }
-    // }, [])
+    useEffect(() => {
+        return () => {
+            dispatch(clearStoryNodeCoordinates())
+        }
+    }, [])
 
     const onSaveCreate = () => {
         axios({

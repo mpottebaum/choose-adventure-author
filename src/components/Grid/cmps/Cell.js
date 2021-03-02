@@ -1,6 +1,6 @@
 import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
@@ -22,6 +22,7 @@ const Cell = ({
     storyNode,
     choice,
 }) => {
+    const { selStoryNodeId } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const fillColor = () => {
@@ -41,14 +42,17 @@ const Cell = ({
     // }
 
     const onCellClick = () => {
+        console.log('cell click storynode', storyNode)
         if(storyNode) {
             dispatch(clearStoryNodeCoordinates())
             dispatch(selectStoryNode(storyNode.id))
-            dispatch(openModal(storyNodeModal))
         } else if(choice) {
-            dispatch(clearStoryNodeCoordinates())
-            dispatch(selectStoryNode(choice.story_node_id))
-            dispatch(openModal(storyNodeModal))
+            if(choice.story_node_id === selStoryNodeId) {
+                dispatch(openModal(storyNodeModal))
+            } else {
+                dispatch(clearStoryNodeCoordinates())
+                dispatch(selectStoryNode(choice.story_node_id))
+            }
         } else {
             const coordinates = { x: gridX, y: gridY }
             dispatch(deselectStoryNode())
