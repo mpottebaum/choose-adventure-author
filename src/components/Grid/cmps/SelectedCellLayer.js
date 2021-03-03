@@ -16,15 +16,7 @@ const SelectedCellLayer = ({
 
     const dispatch = useDispatch()
 
-    let selectedCell = null
-    if(storyNode) {
-        selectedCell = {
-            x: storyNode.grid_x,
-            y: storyNode.grid_y,
-        }
-    } else if(newStoryNodeCoordinates) {
-        selectedCell = newStoryNodeCoordinates
-    }
+    const selectedCell = storyNode || newStoryNodeCoordinates
 
     const coordinateToSVG = ( gridCoordinate, svgGridList, svgDimension ) => {
         const svgGridItem = svgGridList.find(svgGridItem => svgGridItem.coordinateNum === gridCoordinate)

@@ -15,8 +15,8 @@ const Row = ({
 
     const renderCells = () => {
         return columns.map(column => {
-            const storyNode = rowNodes.find(node => node.grid_x === column.coordinateNum)
-            const choice = rowChoices.find(choice => choice.grid_x === column.coordinateNum)
+            const storyNode = rowNodes.find(node => node.x === column.coordinateNum)
+            const choice = rowChoices.find(choice => choice.x === column.coordinateNum)
             return (
                 <Cell
                     key={`${row.svgNum}${column.svgNum}`}

@@ -24,9 +24,9 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
         next_node_id: null,
         color: null,
         choices_attributes: [],
-        story_id: 5,
-        grid_x: newStoryNodeCoordinates && newStoryNodeCoordinates.x,
-        grid_y: newStoryNodeCoordinates && newStoryNodeCoordinates.y,
+        story_id: 6,
+        x: newStoryNodeCoordinates && newStoryNodeCoordinates.x,
+        y: newStoryNodeCoordinates && newStoryNodeCoordinates.y,
 
     }
 

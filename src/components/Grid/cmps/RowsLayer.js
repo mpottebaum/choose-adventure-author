@@ -17,8 +17,8 @@ const RowsLayer = ({
 
     const renderRows = () => {
         return rows.map(( row ) => {
-            const rowNodes = storyNodes.filter(node => node.grid_y === row.coordinateNum)
-            const rowChoices = choices.filter(choice => choice.grid_y === row.coordinateNum)
+            const rowNodes = storyNodes.filter(node => node.y === row.coordinateNum)
+            const rowChoices = choices.filter(choice => choice.y === row.coordinateNum)
             return (
                 <Row
                     key={row.svgNum}

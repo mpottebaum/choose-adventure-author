@@ -189,11 +189,11 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
 
     const getLinePositionCoordinates = (startCell, endCell) => {
 
-        const startCellSvgY = getSvgY(startCell.grid_y)
-        const startCellSvgX = getSvgX(startCell.grid_x)
+        const startCellSvgY = getSvgY(startCell.y)
+        const startCellSvgX = getSvgX(startCell.x)
 
-        const endCellSvgY = getSvgY(endCell.grid_y - 1)
-        const endCellSvgX = getSvgX(endCell.grid_x)
+        const endCellSvgY = getSvgY(endCell.y - 1)
+        const endCellSvgX = getSvgX(endCell.x)
 
         return generateLineCoordinates(startCellSvgX, startCellSvgY, endCellSvgX, endCellSvgY)
     }

@@ -35,13 +35,13 @@ const EditStoryNode = ({
             setUpdatedStoryNode({
                 ...updatedStoryNode,
                 next_node_id: null,
-                choices_attributes: storyNode.choices,
+                choices_attributes: storyNode ? storyNode.choices : [],
             })
         } else {
             setIsThruNode(true)
             setUpdatedStoryNode({
                 ...updatedStoryNode,
-                next_node_id: storyNode.next_node_id,
+                next_node_id: storyNode ? storyNode.next_node_id : null,
                 choices_attributes: [],
             })
         }
