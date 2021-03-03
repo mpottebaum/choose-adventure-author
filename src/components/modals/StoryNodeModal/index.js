@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import { createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import { addStoryNode, editStoryNode, deleteStoryNode } from '../../../store/storyNodes/actions'
+import { deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 
 import ShowStoryNode from './cmps/ShowStoryNode'
 import EditStoryNode from './cmps/EditStoryNode'
@@ -23,9 +24,9 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
         next_node_id: null,
         color: null,
         choices_attributes: [],
-        story_id: 5,
-        grid_x: newStoryNodeCoordinates && newStoryNodeCoordinates.x,
-        grid_y: newStoryNodeCoordinates && newStoryNodeCoordinates.y,
+        story_id: 6,
+        x: newStoryNodeCoordinates && newStoryNodeCoordinates.x,
+        y: newStoryNodeCoordinates && newStoryNodeCoordinates.y,
 
     }
 
@@ -34,6 +35,12 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
         choices_attributes: storyNode.choices,
         choices: null,
     })
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearStoryNodeCoordinates())
+        }
+    }, [])
 
     const onSaveCreate = () => {
         axios({

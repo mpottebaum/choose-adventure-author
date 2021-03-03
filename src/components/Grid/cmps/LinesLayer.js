@@ -17,15 +17,15 @@ const LinesLayer = ({
 
     const getLinePositionCoordinates = lineCoordinatesFactory(columns, rows, cellWidth, cellHeight)
 
-    // console.log('whole line in view', getLinePositionCoordinates({grid_x: 0, grid_y: -7}, {grid_x: 1, grid_y: 6}))
+    // console.log('whole line in view', getLinePositionCoordinates({x: 0, y: -7}, {x: 1, y: 6}))
     // console.log(`expected: x1: ${3.5 * cellWidth} y1: ${14 * cellHeight} x2: ${4.5 * cellWidth} y2: ${2 * cellHeight}`)
-    // console.log('line starts in view', getLinePositionCoordinates({grid_x: -2, grid_y: -2}, {grid_x: -8, grid_y: 0}))
+    // console.log('line starts in view', getLinePositionCoordinates({x: -2, y: -2}, {x: -8, y: 0}))
     // console.log(`expected: x1: ${1.5 * cellWidth} y1: ${9 * cellHeight} x2: ${0 * cellWidth} y2: ${7.25 * cellHeight}`)
-    // console.log('line starts out of view', getLinePositionCoordinates({grid_x: 8, grid_y: 0}, {grid_x: 0, grid_y: 3}))
+    // console.log('line starts out of view', getLinePositionCoordinates({x: 8, y: 0}, {x: 0, y: 3}))
     // console.log(`expected: x1: ${7 * cellWidth} y1: ${(53 / 6) * cellHeight} x2: ${3.5 * cellWidth} y2: ${4 * cellHeight}`)
-    // console.log('nodes out of view, lines in view', getLinePositionCoordinates({grid_x: -4, grid_y: -1}, {grid_x: 4, grid_y: 5}))
+    // console.log('nodes out of view, lines in view', getLinePositionCoordinates({x: -4, y: -1}, {x: 4, y: 5}))
     // console.log(`expected: x1: ${0 * cellWidth} y1: ${(123 / 16) * cellHeight} x2: ${7 * cellWidth} y2: ${(53 / 16) * cellHeight}`)
-    // console.log('line out of view', getLinePositionCoordinates({grid_x: 5, grid_y: -7}, {grid_x: 7, grid_y: 5}))
+    // console.log('line out of view', getLinePositionCoordinates({x: 5, y: -7}, {x: 7, y: 5}))
 
     const renderToNodeLines = () => {
         const firstNodes = storyNodes.filter(node => !!node.next_node_id)

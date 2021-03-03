@@ -70,17 +70,17 @@ const slopeAndInterceptOfThruLine = (startSvgX, startSvgY, endSvgX, endSvgY) => 
 // corners and crossing in the center of the grid)
 
 const visibleGridHelpers = (columns, rows, cellWidth, cellHeight) => {
-    const minVisibleRow = rows.reduce((minRow, row) => row.rowNum < minRow.rowNum ? row : minRow)
-    const maxVisibleRow = rows.reduce((maxRow, row) => row.rowNum > maxRow.rowNum ? row : maxRow)
-    const minVisibleCol = columns.reduce((minCol, col) => col.colNum < minCol.colNum ? col : minCol)
-    const maxVisibleCol = columns.reduce((maxCol, col) => col.colNum > maxCol.colNum? col : maxCol)
+    const minVisibleRow = rows.reduce((minRow, row) => row.svgNum < minRow.svgNum ? row : minRow)
+    const maxVisibleRow = rows.reduce((maxRow, row) => row.svgNum > maxRow.svgNum ? row : maxRow)
+    const minVisibleCol = columns.reduce((minCol, col) => col.svgNum < minCol.svgNum ? col : minCol)
+    const maxVisibleCol = columns.reduce((maxCol, col) => col.svgNum > maxCol.svgNum? col : maxCol)
 
     const yOfPositiveCrossSection = x => {
         const { slope, yIntercept} = slopeAndInterceptOfThruLine(
-            minVisibleCol.colNum * cellWidth,
-            minVisibleRow.rowNum * cellHeight,
-            (maxVisibleCol.colNum + 1) * cellWidth,
-            (maxVisibleRow.rowNum + 1) * cellHeight,
+            minVisibleCol.svgNum * cellWidth,
+            minVisibleRow.svgNum * cellHeight,
+            (maxVisibleCol.svgNum + 1) * cellWidth,
+            (maxVisibleRow.svgNum + 1) * cellHeight,
         )
         return (slope * x) + yIntercept
     }
@@ -88,10 +88,10 @@ const visibleGridHelpers = (columns, rows, cellWidth, cellHeight) => {
 
     const yOfNegativeCrossSection = x => {
         const { slope, yIntercept} = slopeAndInterceptOfThruLine(
-            minVisibleCol.colNum * cellWidth,
-            (maxVisibleRow.rowNum + 1) * cellHeight,
-            (maxVisibleCol.colNum + 1) * cellWidth,
-            minVisibleRow.rowNum * cellHeight,
+            minVisibleCol.svgNum * cellWidth,
+            (maxVisibleRow.svgNum + 1) * cellHeight,
+            (maxVisibleCol.svgNum + 1) * cellWidth,
+            minVisibleRow.svgNum * cellHeight,
         )
         return (slope * x) + yIntercept
     }
@@ -148,19 +148,19 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
             const positiveDiff = svgY - yOfPositiveCrossSection(svgX)
             const negativeDiff = svgY - yOfNegativeCrossSection(svgX)
             if(positiveDiff > 0 && negativeDiff > 0) {
-                y = (maxVisibleRow.rowNum + 1)  * cellHeight
+                y = (maxVisibleRow.svgNum + 1)  * cellHeight
                 x = (y - yIntercept) / slope
             }
             else if(positiveDiff < 0 && negativeDiff < 0) {
-                y = minVisibleRow.rowNum * cellHeight
+                y = minVisibleRow.svgNum * cellHeight
                 x = (y - yIntercept) / slope
             }
             else if(positiveDiff < 0 && negativeDiff > 0) {
-                x = (maxVisibleCol.colNum + 1) * cellWidth
+                x = (maxVisibleCol.svgNum + 1) * cellWidth
                 y = (x * slope) + yIntercept
             }
             else if(positiveDiff > 0 && negativeDiff < 0) {
-                x = minVisibleCol.colNum * cellWidth
+                x = minVisibleCol.svgNum * cellWidth
                 y = (x * slope) + yIntercept
             }
         }
@@ -189,11 +189,11 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
 
     const getLinePositionCoordinates = (startCell, endCell) => {
 
-        const startCellSvgY = getSvgY(startCell.grid_y)
-        const startCellSvgX = getSvgX(startCell.grid_x)
+        const startCellSvgY = getSvgY(startCell.y)
+        const startCellSvgX = getSvgX(startCell.x)
 
-        const endCellSvgY = getSvgY(endCell.grid_y - 1)
-        const endCellSvgX = getSvgX(endCell.grid_x)
+        const endCellSvgY = getSvgY(endCell.y - 1)
+        const endCellSvgX = getSvgX(endCell.x)
 
         return generateLineCoordinates(startCellSvgX, startCellSvgY, endCellSvgX, endCellSvgY)
     }

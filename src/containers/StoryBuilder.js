@@ -25,7 +25,7 @@ const StoryBuilder = () => {
     }, [])
 
     const getStory = async () => {
-        axios(getStoryNodesApi(5))
+        axios(getStoryNodesApi(6))
             .then(storyNodesResp => {
                 dispatch(setStoryNodes(storyNodesResp.data))
             })

@@ -15,15 +15,15 @@ const Row = ({
 
     const renderCells = () => {
         return columns.map(column => {
-            const storyNode = rowNodes.find(node => node.grid_x === column.coordinateNum)
-            const choice = rowChoices.find(choice => choice.grid_x === column.coordinateNum)
+            const storyNode = rowNodes.find(node => node.x === column.coordinateNum)
+            const choice = rowChoices.find(choice => choice.x === column.coordinateNum)
             return (
                 <Cell
-                    key={`${row.rowNum}${column.colNum}`}
+                    key={`${row.svgNum}${column.svgNum}`}
                     gridY={row.coordinateNum}
                     gridX={column.coordinateNum}
-                    svgX={(column.colNum) * cellWidth}
-                    svgY={(row.rowNum) * cellHeight}
+                    svgX={(column.svgNum) * cellWidth}
+                    svgY={(row.svgNum) * cellHeight}
                     width={cellWidth}
                     height={cellHeight}
                     stroke="black"
