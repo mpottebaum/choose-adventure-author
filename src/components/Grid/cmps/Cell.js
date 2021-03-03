@@ -9,6 +9,10 @@ import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
 
+const TEXT_OFFSET_X = 5
+const TEXT_OFFSET_Y = 4
+const TEXT_LINE_CHAR_LIMIT = 17
+
 const Cell = ({
     gridY,
     gridX,
@@ -30,30 +34,25 @@ const Cell = ({
         if(choice) return 'yellow'
         return 'white'
     }
-    // if(storyNode) {
-    //     console.log('gridY', gridY, 'gridX', gridX)
-    //     console.log('node', storyNode)
-    //     console.log(wrapText(storyNode.content, 17))
-    // }
-    // if(choice) {
-    //     console.log('gridY', gridY, 'gridX', gridX)
-    //     console.log('choice', choice)
-    //     console.log(wrapText(choice.content, 17))
-    // }
 
     const onCellClick = () => {
-        console.log('cell click storynode', storyNode)
         if(storyNode) {
+            // select story node
+            // (open modal action is in SelectedCellLayer)
             dispatch(clearStoryNodeCoordinates())
             dispatch(selectStoryNode(storyNode.id))
         } else if(choice) {
             if(choice.story_node_id === selStoryNodeId) {
+                // if choice's story node is selected
+                // open story node modal
                 dispatch(openModal(storyNodeModal))
             } else {
+                // otherwise, select story node
                 dispatch(clearStoryNodeCoordinates())
                 dispatch(selectStoryNode(choice.story_node_id))
             }
         } else {
+            // for empty cells, open create story node modal
             const coordinates = { x: gridX, y: gridY }
             dispatch(deselectStoryNode())
             dispatch(setStoryNodeCoordinates(coordinates))
@@ -77,19 +76,19 @@ const Cell = ({
             />
             <text
                 fontSize={textSize}
-                x={svgX + 5}
-                y={svgY + 4 + textSize}
+                x={svgX + TEXT_OFFSET_X}
+                y={svgY + TEXT_OFFSET_Y + textSize}
             >
-                {storyNode && wrapText(storyNode.name, 17).firstLine}
-                {choice && wrapText(choice.content, 17).firstLine}
+                {storyNode && wrapText(storyNode.name, TEXT_LINE_CHAR_LIMIT).firstLine}
+                {choice && wrapText(choice.content, TEXT_LINE_CHAR_LIMIT).firstLine}
             </text>
             <text
                 fontSize={textSize}
-                x={svgX + 5}
-                y={svgY + 4 + (textSize * 2)}
+                x={svgX + TEXT_OFFSET_X}
+                y={svgY + TEXT_OFFSET_Y + (textSize * 2)}
             >
-                {storyNode && wrapText(storyNode.name, 17).secondLine}
-                {choice && wrapText(choice.content, 17).secondLine}
+                {storyNode && wrapText(storyNode.name, TEXT_LINE_CHAR_LIMIT).secondLine}
+                {choice && wrapText(choice.content, TEXT_LINE_CHAR_LIMIT).secondLine}
             </text>
         </g>
     )

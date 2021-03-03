@@ -21,7 +21,7 @@ const RowsLayer = ({
             const rowChoices = choices.filter(choice => choice.grid_y === row.coordinateNum)
             return (
                 <Row
-                    key={row.rowNum}
+                    key={row.svgNum}
                     cellWidth={cellWidth}
                     cellHeight={cellHeight}
                     row={row}

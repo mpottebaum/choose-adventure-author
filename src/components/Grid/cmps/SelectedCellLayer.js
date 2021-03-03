@@ -25,15 +25,10 @@ const SelectedCellLayer = ({
     } else if(newStoryNodeCoordinates) {
         selectedCell = newStoryNodeCoordinates
     }
-    
-    const xToSVG = gridX => {
-        const column = columns.find(column => column.coordinateNum === gridX)
-        return column.colNum * cellWidth
-    }
-    
-    const yToSVG = gridY => {
-        const row = rows.find(row => row.coordinateNum === gridY)
-        return row.rowNum * cellHeight
+
+    const coordinateToSVG = ( gridCoordinate, svgGridList, svgDimension ) => {
+        const svgGridItem = svgGridList.find(svgGridItem => svgGridItem.coordinateNum === gridCoordinate)
+        return svgGridItem.svgNum * svgDimension
     }
 
     return (
@@ -42,13 +37,13 @@ const SelectedCellLayer = ({
                 selectedCell && (
                     <rect
                         onClick={() => dispatch(openModal(storyNodeModal))}
-                        id={`selected-cell`}
-                        x={xToSVG(selectedCell.x)}
-                        y={yToSVG(selectedCell.y)}
+                        id='selected-cell'
+                        x={coordinateToSVG(selectedCell.x, columns, cellWidth)}
+                        y={coordinateToSVG(selectedCell.y, rows, cellHeight)}
                         width={cellWidth}
                         height={cellHeight}
-                        stroke={'green'}
-                        fill={'white'}
+                        stroke='green'
+                        fill='white'
                         fillOpacity={0}
                         strokeWidth={3}
                     />
