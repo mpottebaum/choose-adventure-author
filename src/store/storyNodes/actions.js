@@ -4,6 +4,10 @@ import {
     EDIT_STORY_NODE,
     DELETE_STORY_NODE
 } from './index'
+import axios from 'axios'
+import { moveStoryNodeApi, createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../constants/apiRoutes'
+import { clearToolbarAction } from '../toolbarAction/actions'
+import { clearStoryNodeCoordinates } from '../newStoryNodeCoordinates/actions'
 
 export const setStoryNodes = storyNodes => ({
     type: SET_STORY_NODES,
@@ -24,3 +28,55 @@ export const deleteStoryNode = storyNodeId => ({
     type: DELETE_STORY_NODE,
     storyNodeId,
 })
+
+export const createStoryNode = storyNode => dispatch => {
+    axios({
+        method: 'POST',
+        url: createStoryNodeApi,
+        data: {
+            story_node: storyNode,
+        }
+    })
+    .then(resp => {
+        dispatch(addStoryNode(resp.data))
+        dispatch(clearStoryNodeCoordinates())
+    })
+}
+
+export const updateStoryNode = storyNode => dispatch => {
+    axios({
+        method: 'PUT',
+        url: updateStoryNodeApi(storyNode.id),
+        data: storyNode,
+    })
+    .then(resp => {
+        dispatch(editStoryNode(resp.data))
+    })
+}
+
+export const destroyStoryNode = storyNodeId => dispatch => {
+    axios({
+        method: 'DELETE',
+        url: deleteStoryNodeApi(storyNodeId),
+    })
+    .then(resp => {
+        dispatch(deleteStoryNode(storyNodeId))
+    })
+}
+
+export const moveStoryNode = (x, y, storyNodeId) => dispatch => {
+    axios({
+        method: 'PUT',
+        url: moveStoryNodeApi(storyNodeId),
+        data: {
+            story_node: {
+                x,
+                y,
+            }
+        },
+    })
+    .then(resp => {
+        dispatch(editStoryNode(resp.data))
+        dispatch(clearToolbarAction())
+    })
+}

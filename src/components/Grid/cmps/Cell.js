@@ -2,7 +2,7 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
-import { editStoryNode } from '../../../store/storyNodes/actions'
+import { editStoryNode, moveStoryNode } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import { clearToolbarAction } from '../../../store/toolbarAction/actions'
@@ -42,30 +42,13 @@ const Cell = ({
         return 'white'
     }
 
-    const moveStoryNode = () => {
-        axios({
-            method: 'PUT',
-            url: moveStoryNodeApi(selStoryNodeId),
-            data: {
-                story_node: {
-                    x: gridX,
-                    y: gridY,
-                }
-            },
-        })
-        .then(moveNodeResp => {
-            dispatch(editStoryNode(moveNodeResp.data))
-            dispatch(clearToolbarAction())
-        })
-    }
-
     const onCellClick = () => {
 
         if(selStoryNodeId && toolbarAction) {
             switch(toolbarAction) {
                 case moveAction:
                     if(!storyNode && !choice) {
-                        moveStoryNode()
+                        dispatch(moveStoryNode(gridX, gridY, selStoryNodeId))
                     }
                     return
                 default:
@@ -78,23 +61,26 @@ const Cell = ({
             // (open modal action is in SelectedCellLayer)
             dispatch(clearStoryNodeCoordinates())
             dispatch(selectStoryNode(storyNode.id))
-        } else if(choice) {
+            return
+        }
+        if(choice) {
             if(choice.story_node_id === selStoryNodeId) {
                 // if choice's story node is selected
                 // open story node modal
                 dispatch(openModal(storyNodeModal))
-            } else {
-                // otherwise, select story node
-                dispatch(clearStoryNodeCoordinates())
-                dispatch(selectStoryNode(choice.story_node_id))
+                return
             }
-        } else {
-            // for empty cells, open create story node modal
-            const coordinates = { x: gridX, y: gridY }
-            dispatch(deselectStoryNode())
-            dispatch(setStoryNodeCoordinates(coordinates))
-            dispatch(openModal(createStoryNodeModal))
+
+            // otherwise, select story node
+            dispatch(clearStoryNodeCoordinates())
+            dispatch(selectStoryNode(choice.story_node_id))
+            return
         }
+        // for empty cells, open create story node modal
+        const coordinates = { x: gridX, y: gridY }
+        dispatch(deselectStoryNode())
+        dispatch(setStoryNodeCoordinates(coordinates))
+        dispatch(openModal(createStoryNodeModal))
     }
 
 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from 'axios'
 
-import { createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
-import { addStoryNode, editStoryNode, deleteStoryNode } from '../../../store/storyNodes/actions'
+import {
+    createStoryNode,
+    updateStoryNode,
+    destroyStoryNode
+} from '../../../store/storyNodes/actions'
 
 import ShowStoryNode from './cmps/ShowStoryNode'
 import EditStoryNode from './cmps/EditStoryNode'
@@ -42,33 +44,13 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     }, [])
 
     const onSaveCreate = () => {
-        axios({
-            method: 'POST',
-            url: createStoryNodeApi,
-            data: {
-                story_node: updatedStoryNode,
-            }
-        })
-        .then(createNodeResp => {
-            dispatch(addStoryNode(createNodeResp.data))
-            onClose()
-            dispatch(clearStoryNodeCoordinates())
-        })
-        .catch(e => {
-            console.log(e)
-        })
+        dispatch(createStoryNode(updatedStoryNode))
+        onClose()
     }
 
     const onSaveEdit = () => {
-        axios({
-            method: 'PUT',
-            url: updateStoryNodeApi(selStoryNodeId),
-            data: updatedStoryNode,
-        })
-        .then(editNodeResp => {
-            dispatch(editStoryNode(editNodeResp.data))
-            setIsEditing(false)
-        })
+        dispatch(updateStoryNode(updatedStoryNode))
+        setIsEditing(false)
     }
 
     const onCancelEdit = () => {
@@ -82,15 +64,8 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     }
 
     const onDeleteNode = () => {
-        axios({
-            method: 'DELETE',
-            url: deleteStoryNodeApi(selStoryNodeId),
-        })
-        .then(deleteNodeResp => {
-            console.log(deleteNodeResp.data)
-            onClose()
-            dispatch(deleteStoryNode(selStoryNodeId))
-        })
+        dispatch(destroyStoryNode(selStoryNodeId))
+        onClose()
     }
 
     return (
