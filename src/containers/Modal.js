@@ -1,11 +1,13 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../store/modal/actions'
-import { storyNodeModal, createStoryNodeModal } from '../constants/modals'
+import modals from '../constants/modals'
 
 import ReactModal from 'react-modal'
 
 import StoryNodeModal from '../components/modals/StoryNodeModal'
+
+const { storyNodeModal, createStoryNodeModal } = modals
 
 const customStyles = {
     content: {

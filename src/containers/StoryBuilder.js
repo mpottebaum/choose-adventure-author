@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
@@ -8,7 +8,6 @@ import { setStoryNodes } from '../store/storyNodes/actions'
 
 import Toolbar from '../components/Toolbar'
 import Grid from '../components/Grid'
-import ReactModal from 'react-modal'
 
 const Container = styled.div`
     height: 50vh;
@@ -17,8 +16,6 @@ const Container = styled.div`
 const StoryBuilder = () => {
 
     const dispatch = useDispatch()
-
-    const [ storyNodeModal, setStoryNodeModal ] = useState(false)
 
     useEffect(() => {
         getStory()
@@ -40,14 +37,6 @@ const StoryBuilder = () => {
             numRows={15}
         />
         <Toolbar />
-        <ReactModal
-            isOpen={storyNodeModal}
-            shouldCloseOnOverlayClick={true}
-            onRequestClose={() => setStoryNodeModal(false)}
-            ariaHideApp={false}
-        >
-            <p>story node modal</p>
-        </ReactModal>
     </Container>
 }
 

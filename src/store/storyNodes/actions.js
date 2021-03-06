@@ -59,7 +59,7 @@ export const destroyStoryNode = storyNodeId => dispatch => {
         method: 'DELETE',
         url: deleteStoryNodeApi(storyNodeId),
     })
-    .then(resp => {
+    .then(() => {
         dispatch(deleteStoryNode(storyNodeId))
     })
 }
@@ -69,10 +69,7 @@ export const moveStoryNode = (x, y, storyNodeId) => dispatch => {
         method: 'PUT',
         url: moveStoryNodeApi(storyNodeId),
         data: {
-            story_node: {
-                x,
-                y,
-            }
+            story_node: { x, y, }
         },
     })
     .then(resp => {

@@ -2,14 +2,11 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
-import { editStoryNode, moveStoryNode } from '../../../store/storyNodes/actions'
+import { moveStoryNode } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
-import { clearToolbarAction } from '../../../store/toolbarAction/actions'
-import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
+import modals from '../../../constants/modals'
 import toolbarActions from '../../../constants/toolbarActions'
-import axios from 'axios'
-import { moveStoryNodeApi } from '../../../constants/apiRoutes'
 
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
@@ -19,6 +16,7 @@ const TEXT_OFFSET_Y = 4
 const TEXT_LINE_CHAR_LIMIT = 17
 
 const { move: moveAction } = toolbarActions
+const { storyNodeModal, createStoryNodeModal } = modals
 
 const Cell = ({
     gridY,

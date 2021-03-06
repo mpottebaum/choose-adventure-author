@@ -2,7 +2,9 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { openModal } from '../../../store/modal/actions'
-import { storyNodeModal } from '../../../constants/modals'
+import modals from '../../../constants/modals'
+
+const { storyNodeModal } = modals
 
 const SelectedCellLayer = ({
     cellWidth,
