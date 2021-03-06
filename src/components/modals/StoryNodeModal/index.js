@@ -5,7 +5,6 @@ import axios from 'axios'
 import { createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../../constants/apiRoutes'
 import { clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import { addStoryNode, editStoryNode, deleteStoryNode } from '../../../store/storyNodes/actions'
-import { deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 
 import ShowStoryNode from './cmps/ShowStoryNode'
 import EditStoryNode from './cmps/EditStoryNode'
