@@ -2,9 +2,12 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
+import { moveStoryNode, moveChoice } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
+import { selectChoice, deselectChoice } from '../../../store/selChoiceId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
-import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
+import modals from '../../../constants/modals'
+import toolbarActions from '../../../constants/toolbarActions'
 
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
@@ -12,6 +15,9 @@ import { storyNodeModal, createStoryNodeModal } from '../../../constants/modals'
 const TEXT_OFFSET_X = 5
 const TEXT_OFFSET_Y = 4
 const TEXT_LINE_CHAR_LIMIT = 17
+
+const { move: moveAction } = toolbarActions
+const { storyNodeModal, createStoryNodeModal } = modals
 
 const Cell = ({
     gridY,
@@ -26,7 +32,7 @@ const Cell = ({
     storyNode,
     choice,
 }) => {
-    const { selStoryNodeId } = useSelector(state => state)
+    const { selStoryNodeId, selChoiceId, toolbarAction } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const fillColor = () => {
@@ -35,29 +41,45 @@ const Cell = ({
         return 'white'
     }
 
+    const isEmpty = () => !storyNode && !choice
+
     const onCellClick = () => {
+
+        if(toolbarAction) {
+            switch(toolbarAction) {
+                case moveAction:
+                    if(isEmpty()) {
+                        if(selStoryNodeId) dispatch(moveStoryNode(gridX, gridY, selStoryNodeId))
+                        if(selChoiceId) dispatch(moveChoice(gridX, gridY, selChoiceId))
+                    }
+                    return
+                default:
+                    return
+            }
+        }
+
         if(storyNode) {
             // select story node
             // (open modal action is in SelectedCellLayer)
             dispatch(clearStoryNodeCoordinates())
+            dispatch(deselectChoice())
             dispatch(selectStoryNode(storyNode.id))
-        } else if(choice) {
-            if(choice.story_node_id === selStoryNodeId) {
-                // if choice's story node is selected
-                // open story node modal
-                dispatch(openModal(storyNodeModal))
-            } else {
-                // otherwise, select story node
-                dispatch(clearStoryNodeCoordinates())
-                dispatch(selectStoryNode(choice.story_node_id))
-            }
-        } else {
-            // for empty cells, open create story node modal
-            const coordinates = { x: gridX, y: gridY }
-            dispatch(deselectStoryNode())
-            dispatch(setStoryNodeCoordinates(coordinates))
-            dispatch(openModal(createStoryNodeModal))
+            return
         }
+        if(choice) {
+            // select choice
+            // (open modal action is also in SelectedCellLayer)
+            dispatch(clearStoryNodeCoordinates())
+            dispatch(deselectStoryNode())
+            dispatch(selectChoice(choice.id))
+            return
+        }
+        // for empty cells, open create story node modal
+        const coordinates = { x: gridX, y: gridY }
+        dispatch(deselectStoryNode())
+        dispatch(deselectChoice())
+        dispatch(setStoryNodeCoordinates(coordinates))
+        dispatch(openModal(createStoryNodeModal))
     }
 
 

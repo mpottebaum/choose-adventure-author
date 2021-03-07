@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
 
-const Input = styled.input`
-
-`
-
-const TextArea = styled.textarea`
-
-`
-
-const Button = styled.button`
-
-`
+import Input from '../../../Input'
+import TextArea from '../../../TextArea'
+import Button from '../../../Button'
+import SelectInput from '../../../SelectInput'
 
 const EditStoryNode = ({
     updatedStoryNode,
@@ -49,13 +41,19 @@ const EditStoryNode = ({
 
     const renderNextNodeOptions = (onChange, value) => {
         const nextNodeOptions = storyNodes.filter(node => node.id !== selStoryNodeId)
+        const options = nextNodeOptions.map(node => ({
+            value: node.id,
+            content: node.name,
+        }))
+
         return (
-            <select name='next-node' onChange={onChange} value={value}>
-                <option value={null}>Choose the next node...</option>
-                {nextNodeOptions.map(node => (
-                    <option value={node.id}>{node.name}</option>
-                ))}
-            </select>
+            <SelectInput
+                name={'next-node'}
+                onChange={onChange}
+                value={value}
+                placeholder={'Choose the next node...'}
+                options={options}
+            />
         )
     }
 
