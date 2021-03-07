@@ -2,7 +2,7 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
-import { moveStoryNode } from '../../../store/storyNodes/actions'
+import { moveStoryNode, moveChoice } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 import { selectChoice, deselectChoice } from '../../../store/selChoiceId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
@@ -41,13 +41,16 @@ const Cell = ({
         return 'white'
     }
 
+    const isEmpty = () => !storyNode && !choice
+
     const onCellClick = () => {
 
-        if(selStoryNodeId && toolbarAction) {
+        if(toolbarAction) {
             switch(toolbarAction) {
                 case moveAction:
-                    if(!storyNode && !choice) {
-                        dispatch(moveStoryNode(gridX, gridY, selStoryNodeId))
+                    if(isEmpty()) {
+                        if(selStoryNodeId) dispatch(moveStoryNode(gridX, gridY, selStoryNodeId))
+                        if(selChoiceId) dispatch(moveChoice(gridX, gridY, selChoiceId))
                     }
                     return
                 default:

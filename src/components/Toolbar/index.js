@@ -10,13 +10,13 @@ import toolbarActions from '../../constants/toolbarActions'
 const { move: moveAction } = toolbarActions
 
 const Toolbar = () => {
-    const { gridViewCenter, selStoryNodeId, toolbarAction } = useSelector(state => state)
+    const { gridViewCenter, selStoryNodeId, selChoiceId, toolbarAction } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const onMoveClick = () => {
         if(toolbarAction === moveAction) {
             dispatch(clearToolbarAction())
-        } else if(selStoryNodeId) {
+        } else if(selStoryNodeId || selChoiceId) {
             dispatch(setToolbarAction(moveAction))
         }
     }

@@ -102,3 +102,17 @@ export const updateChoice = choice => dispatch => {
         dispatch(editChoice(resp.data))
     })
 }
+
+export const moveChoice = (x, y, choiceId) => dispatch => {
+    axios({
+        method: 'PUT',
+        url: updateChoiceApi(choiceId),
+        data: {
+            choice: { x, y, }
+        },
+    })
+    .then(resp => {
+        dispatch(editChoice(resp.data))
+        dispatch(clearToolbarAction())
+    })
+}
