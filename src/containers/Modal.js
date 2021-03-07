@@ -6,8 +6,9 @@ import modals from '../constants/modals'
 import ReactModal from 'react-modal'
 
 import StoryNodeModal from '../components/modals/StoryNodeModal'
+import ChoiceModal from '../components/modals/ChoiceModal'
 
-const { storyNodeModal, createStoryNodeModal } = modals
+const { storyNodeModal, createStoryNodeModal, choiceModal } = modals
 
 const customStyles = {
     content: {
@@ -34,6 +35,12 @@ const Modal = () => {
                     <StoryNodeModal
                         onClose={onClose}
                         createNode
+                    />
+                )
+            case choiceModal:
+                return (
+                    <ChoiceModal
+                        onClose={onClose}
                     />
                 )
             default:

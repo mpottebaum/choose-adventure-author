@@ -1,19 +1,8 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import styled from 'styled-components'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
 
-const Input = styled.input`
+import Button from '../../../Button'
 
-`
-
-const TextArea = styled.textarea`
-
-`
-
-const Button = styled.button`
-
-`
 
 const ShowStoryNode = ({
     onClose,

@@ -2,6 +2,7 @@ export const SET_STORY_NODES = 'SET_STORY_NODES'
 export const ADD_STORY_NODE = 'ADD_STORY_NODE'
 export const EDIT_STORY_NODE = 'EDIT_STORY_NODE'
 export const DELETE_STORY_NODE = 'DELETE_STORY_NODE'
+export const EDIT_CHOICE = 'EDIT_CHOICE'
 
 const storyNodesReducer = ( state = [], action ) => {
     switch(action.type) {
@@ -21,6 +22,21 @@ const storyNodesReducer = ( state = [], action ) => {
             })
         case DELETE_STORY_NODE:
             return state.filter(node => node.id !== action.storyNodeId)
+        case EDIT_CHOICE:
+            return state.map(node => {
+                if(node.id === action.choice.story_node_id) {
+                    return {
+                        ...node,
+                        choices: node.choices.map(choice => {
+                            if(choice.id === action.choice.id) {
+                                return action.choice
+                            }
+                            return choice
+                        })
+                    }
+                }
+                return node
+            })
         default:
             return state
     }

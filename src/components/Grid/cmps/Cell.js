@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
 import { moveStoryNode } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
+import { selectChoice, deselectChoice } from '../../../store/selChoiceId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import modals from '../../../constants/modals'
 import toolbarActions from '../../../constants/toolbarActions'
@@ -31,7 +32,7 @@ const Cell = ({
     storyNode,
     choice,
 }) => {
-    const { selStoryNodeId, toolbarAction } = useSelector(state => state)
+    const { selStoryNodeId, selChoiceId, toolbarAction } = useSelector(state => state)
     const dispatch = useDispatch()
 
     const fillColor = () => {
@@ -58,25 +59,22 @@ const Cell = ({
             // select story node
             // (open modal action is in SelectedCellLayer)
             dispatch(clearStoryNodeCoordinates())
+            dispatch(deselectChoice())
             dispatch(selectStoryNode(storyNode.id))
             return
         }
         if(choice) {
-            if(choice.story_node_id === selStoryNodeId) {
-                // if choice's story node is selected
-                // open story node modal
-                dispatch(openModal(storyNodeModal))
-                return
-            }
-
-            // otherwise, select story node
+            // select choice
+            // (open modal action is also in SelectedCellLayer)
             dispatch(clearStoryNodeCoordinates())
-            dispatch(selectStoryNode(choice.story_node_id))
+            dispatch(deselectStoryNode())
+            dispatch(selectChoice(choice.id))
             return
         }
         // for empty cells, open create story node modal
         const coordinates = { x: gridX, y: gridY }
         dispatch(deselectStoryNode())
+        dispatch(deselectChoice())
         dispatch(setStoryNodeCoordinates(coordinates))
         dispatch(openModal(createStoryNodeModal))
     }

@@ -2,10 +2,17 @@ import {
     SET_STORY_NODES,
     ADD_STORY_NODE,
     EDIT_STORY_NODE,
-    DELETE_STORY_NODE
+    DELETE_STORY_NODE,
+    EDIT_CHOICE
 } from './index'
 import axios from 'axios'
-import { moveStoryNodeApi, createStoryNodeApi, updateStoryNodeApi, deleteStoryNodeApi } from '../../constants/apiRoutes'
+import {
+    moveStoryNodeApi,
+    createStoryNodeApi,
+    updateStoryNodeApi,
+    deleteStoryNodeApi,
+    updateChoiceApi,
+} from '../../constants/apiRoutes'
 import { clearToolbarAction } from '../toolbarAction/actions'
 import { clearStoryNodeCoordinates } from '../newStoryNodeCoordinates/actions'
 
@@ -27,6 +34,11 @@ export const editStoryNode = storyNode => ({
 export const deleteStoryNode = storyNodeId => ({
     type: DELETE_STORY_NODE,
     storyNodeId,
+})
+
+export const editChoice = choice => ({
+    type: EDIT_CHOICE,
+    choice,
 })
 
 export const createStoryNode = storyNode => dispatch => {
@@ -75,5 +87,18 @@ export const moveStoryNode = (x, y, storyNodeId) => dispatch => {
     .then(resp => {
         dispatch(editStoryNode(resp.data))
         dispatch(clearToolbarAction())
+    })
+}
+
+export const updateChoice = choice => dispatch => {
+    axios({
+        method: 'PUT',
+        url: updateChoiceApi(choice.id),
+        data: {
+            choice,
+        }
+    })
+    .then(resp => {
+        dispatch(editChoice(resp.data))
     })
 }
