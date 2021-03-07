@@ -3,7 +3,8 @@ import {
     ADD_STORY_NODE,
     EDIT_STORY_NODE,
     DELETE_STORY_NODE,
-    EDIT_CHOICE
+    EDIT_CHOICE,
+    DELETE_CHOICE
 } from './index'
 import axios from 'axios'
 import {
@@ -12,6 +13,7 @@ import {
     updateStoryNodeApi,
     deleteStoryNodeApi,
     updateChoiceApi,
+    deleteChoiceApi,
 } from '../../constants/apiRoutes'
 import { clearToolbarAction } from '../toolbarAction/actions'
 import { clearStoryNodeCoordinates } from '../newStoryNodeCoordinates/actions'
@@ -38,6 +40,11 @@ export const deleteStoryNode = storyNodeId => ({
 
 export const editChoice = choice => ({
     type: EDIT_CHOICE,
+    choice,
+})
+
+export const deleteChoice = choice => ({
+    type: DELETE_CHOICE,
     choice,
 })
 
@@ -100,6 +107,16 @@ export const updateChoice = choice => dispatch => {
     })
     .then(resp => {
         dispatch(editChoice(resp.data))
+    })
+}
+
+export const destroyChoice = choice => dispatch => {
+    axios({
+        method: 'DELETE',
+        url: deleteChoiceApi(choice.id),
+    })
+    .then(() => {
+        dispatch(deleteChoice(choice))
     })
 }
 

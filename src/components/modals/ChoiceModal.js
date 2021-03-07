@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { extractChoices } from '../../helpers/storeHelpers'
-import { updateChoice } from '../../store/storyNodes/actions'
+import { updateChoice, destroyChoice } from '../../store/storyNodes/actions'
 import { selectStoryNode } from '../../store/selStoryNodeId/actions'
 import { deselectChoice } from '../../store/selChoiceId/actions'
 import { openModal } from '../../store/modal/actions'
@@ -70,6 +70,11 @@ const ChoiceModal = ({ onClose }) => {
         dispatch(deselectChoice())
     }
 
+    const onDelete = () => {
+        dispatch(destroyChoice(choice))
+        onClose()
+    }
+
     return (
         isEditing ? (
             <>
@@ -87,6 +92,7 @@ const ChoiceModal = ({ onClose }) => {
                 <p>{choice.content}</p>
                 {renderNextNode()}
                 <Button onClick={() => setIsEditing(true)}>EDIT</Button>
+                <Button onClick={onDelete}>DELETE</Button>
                 <Button onClick={onViewStoryNode}>VIEW STORY NODE</Button>
                 <Button onClick={onClose}>CLOSE</Button>
             </>
