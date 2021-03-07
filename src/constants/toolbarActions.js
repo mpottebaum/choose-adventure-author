@@ -1,5 +1,6 @@
 const toolbarActions = {
-    move: 'move',
+    moveAction: 'move',
+    drawLineAction: 'draw line',
 }
 
 export default toolbarActions

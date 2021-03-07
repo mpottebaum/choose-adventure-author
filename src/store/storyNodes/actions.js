@@ -132,3 +132,19 @@ export const moveChoice = (x, y, choiceId) => dispatch => {
         dispatch(clearToolbarAction())
     })
 }
+
+export const drawLine = (nextNodeId, id, isChoice=false) => dispatch => {
+    axios({
+        method: 'PUT',
+        url: isChoice ? updateChoiceApi(id) : updateStoryNodeApi(id),
+        data: {
+            [isChoice ? 'choice' : 'story_node']: {
+                next_node_id: nextNodeId
+            }
+        }
+    })
+    .then(resp => {
+        dispatch(isChoice ? editChoice(resp.data) : editStoryNode(resp.data))
+        dispatch(clearToolbarAction())
+    })
+}
