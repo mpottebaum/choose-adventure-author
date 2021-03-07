@@ -8,7 +8,6 @@ import {
 } from './index'
 import axios from 'axios'
 import {
-    moveStoryNodeApi,
     createStoryNodeApi,
     updateStoryNodeApi,
     deleteStoryNodeApi,
@@ -86,7 +85,7 @@ export const destroyStoryNode = storyNodeId => dispatch => {
 export const moveStoryNode = (x, y, storyNodeId) => dispatch => {
     axios({
         method: 'PUT',
-        url: moveStoryNodeApi(storyNodeId),
+        url: updateStoryNodeApi(storyNodeId),
         data: {
             story_node: { x, y, }
         },
