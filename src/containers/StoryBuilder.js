@@ -29,9 +29,15 @@ const StoryBuilder = () => {
                 dispatch(setStoryNodes(storyNodesResp.data))
             })
     }
+
+    const fullWidth = width - 20
+    const fullHeight = height - 20
+
+    const toolbarHeight = 100
+    const gridHeight = fullHeight - 100
     
-    const numCols = Math.floor(width / 121)
-    const numRows = Math.floor(height / 43)
+    const numCols = Math.floor(fullWidth / 121)
+    const numRows = Math.floor(gridHeight / 43)
 
 
     return <Container>
@@ -40,12 +46,15 @@ const StoryBuilder = () => {
             // height={650}
             // numCols={7}
             // numRows={15}
-            width={width - 80}
-            height={height - 80}
+            width={fullWidth}
+            height={gridHeight}
             numCols={numCols}
             numRows={numRows}
         />
-        <Toolbar />
+        <Toolbar
+            height={toolbarHeight}
+            width={fullWidth}
+        />
     </Container>
 }
 
