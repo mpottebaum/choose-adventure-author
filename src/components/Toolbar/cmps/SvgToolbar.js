@@ -1,4 +1,8 @@
-import React from "react";
+import React from "react"
+import { useSelector } from 'react-redux'
+import toolbarActions from '../../../constants/toolbarActions'
+
+const { moveAction, drawLineAction } = toolbarActions
 
 const SvgToolbar = ({
     onGridNavUp,
@@ -10,6 +14,14 @@ const SvgToolbar = ({
     height,
     width,
 }) => {
+
+    const { toolbarAction } = useSelector(state => state)
+
+    const actionButtonFill = action => {
+        if(toolbarAction === action) return 'yellow'
+        return '#f2f2f2'
+    }
+
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -165,7 +177,7 @@ const SvgToolbar = ({
             height='60'
             x='550.257'
             y='22.985'
-            fill='#f2f2f2'
+            fill={actionButtonFill(moveAction)}
             fillOpacity='1'
             fillRule='evenodd'
             opacity='0.998'
@@ -273,7 +285,7 @@ const SvgToolbar = ({
                y="18.52916"
                rx="2"
                ry="2"
-               fill='#f2f2f2'
+               fill={actionButtonFill(drawLineAction)}
             />
             <path
                d="M 490.97226,58.786443 523.96249,39.380425"

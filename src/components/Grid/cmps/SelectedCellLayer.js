@@ -24,10 +24,14 @@ const SelectedCellLayer = ({
 
     const selectedCell = storyNode || newStoryNodeCoordinates || choice
 
+    const findSvgGridItem = ( gridCoordinate, svgGridList ) => svgGridList.find(svgGridItem => svgGridItem.coordinateNum === gridCoordinate)
+
     const coordinateToSVG = ( gridCoordinate, svgGridList, svgDimension ) => {
-        const svgGridItem = svgGridList.find(svgGridItem => svgGridItem.coordinateNum === gridCoordinate)
+        const svgGridItem = findSvgGridItem(gridCoordinate, svgGridList)
         return svgGridItem.svgNum * svgDimension
     }
+
+    const isVisible = () => findSvgGridItem(selectedCell.x, columns) && findSvgGridItem(selectedCell.y, rows)
 
     const onClick = () => {
         if(storyNode) {
@@ -43,7 +47,7 @@ const SelectedCellLayer = ({
     return (
         <g>
             {
-                selectedCell && (
+                (selectedCell && isVisible()) && (
                     <rect
                         onClick={onClick}
                         id='selected-cell'
