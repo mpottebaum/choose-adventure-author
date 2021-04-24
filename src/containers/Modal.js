@@ -15,18 +15,19 @@ const { storyNodeModal, createStoryNodeModal, choiceModal } = modals
 
 const customStyles = {
     content: {
-        height: 'fit-content',
-        width: 'fit-content',
+        height: '100%',
+        width: '100%',
         position: 'initial',
         padding: '0px',
-        marginRight: '40px',
-        marginLeft: '40px',
+        marginRight: '40pt',
+        marginLeft: '40pt',
         maxWidth: '860px',
     },
     overlay: {
         display: 'flex',
         justifyContent: 'center',
         paddingTop: '50pt',
+        paddingBottom: '50pt',
     },
 }
 

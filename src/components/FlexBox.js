@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const Container = styled.div`
     display: flex;
     flex-direction: ${({flexDirection}) => flexDirection || 'row'};
-    justify-content: ${({justifyContent}) => justifyContent || 'flex-start'};
-    flex-direction: ${({alignItems}) => alignItems || 'flex-start'};
+    justify-content: ${({justifyContent}) => justifyContent || 'inherit'};
+    align-items: ${({alignItems}) => alignItems || 'inherit'};
 `
 
 const FlexBox = ({
