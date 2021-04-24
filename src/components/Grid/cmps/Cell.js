@@ -8,13 +8,16 @@ import { selectChoice, deselectChoice } from '../../../store/selChoiceId/actions
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import modals from '../../../constants/modals'
 import toolbarActions from '../../../constants/toolbarActions'
+import {
+    TEXT_OFFSET_X,
+    TEXT_OFFSET_Y,
+    TEXT_LINE_CHAR_LIMIT
+} from '../../../constants/grid'
 
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
 
-const TEXT_OFFSET_X = 5
-const TEXT_OFFSET_Y = 4
-const TEXT_LINE_CHAR_LIMIT = 17
+
 
 const { moveAction, drawLineAction } = toolbarActions
 const { createStoryNodeModal } = modals

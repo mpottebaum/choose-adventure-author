@@ -1,7 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
+
+import NextNode from './NextNode'
+import Choices from './Choices'
 
 import Button from '../../../Button'
+import Header from '../../../Header'
+
+const Content = styled.p`
+    padding: 15px;
+`
+
+const BtnsContainer = styled.div`
+    padding: 10px 0px 20px;
+`
 
 
 const ShowStoryNode = ({
@@ -10,39 +23,21 @@ const ShowStoryNode = ({
     onDelete,
     storyNode,
 }) => {
-
     const storyNodes = useSelector(state => state.storyNodes)
-
-    const renderNextNode = () => {
-        if(storyNode.next_node_id) {
-            const nextNode = storyNodes.find(node => node.id === storyNode.next_node_id)
-            return (
-                <p>Next Node: {nextNode.name}</p>
-            )
-        }
-    }
-
-    const renderChoices = () => {
-        if(storyNode.choices.length > 0) {
-            return storyNode.choices.map(choice => (
-                <li key={choice.id}>
-                    <p>{choice.content}</p>
-                </li>
-            ))
-        }
-    }
-
+    const nextNode = storyNodes.find(node => node.id === storyNode.next_node_id)
     return (
         <>
-            <h1>{storyNode && storyNode.name}</h1>
-            <p>{storyNode && storyNode.content}</p>
-            {renderNextNode()}
-            <ul>
-                {renderChoices()}
-            </ul>
-            <Button onClick={onClose}>CLOSE</Button>
-            <Button onClick={onEdit}>EDIT</Button>
-            <Button onClick={onDelete}>DELETE</Button>
+            <Header>{storyNode && storyNode.name}</Header>
+            <BtnsContainer>
+                <Button
+                    onClick={onEdit}
+                    marginRight={10}
+                >EDIT</Button>
+                <Button onClick={onDelete}>DELETE</Button>
+            </BtnsContainer>
+            <Content>{storyNode && storyNode.content}</Content>
+            <NextNode storyNode={nextNode} />
+            <Choices choices={storyNode.choices} />
         </>
     )
 }
