@@ -57,9 +57,11 @@ export const wrapText = (text, charLimit) => {
 const slopeAndInterceptOfThruLine = (startSvgX, startSvgY, endSvgX, endSvgY) => {
     const slope = (endSvgY - startSvgY) / (endSvgX - startSvgX)
     const yIntercept = startSvgY - (slope * startSvgX)
+    const xIntercept = startSvgX
     return {
         slope,
         yIntercept,
+        xIntercept,
     }
 }
 
@@ -138,7 +140,7 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
 
     // adjust svg coordinates if line terminus is outside
     // of the visible grid
-    const redefineLineCoordinates = (svgX, svgY, slope, yIntercept) => {
+    const redefineLineCoordinates = (svgX, svgY, slope, yIntercept, xIntercept) => {
         let x
         let y
         if(isVisible(svgY, rows.length * cellHeight) && isVisible(svgX, columns.length * cellWidth)) {
@@ -149,11 +151,11 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
             const negativeDiff = svgY - yOfNegativeCrossSection(svgX)
             if(positiveDiff > 0 && negativeDiff > 0) {
                 y = (maxVisibleRow.svgNum + 1)  * cellHeight
-                x = (y - yIntercept) / slope
+                x = Math.abs(slope) === Infinity ? xIntercept : (y - yIntercept) / slope
             }
             else if(positiveDiff < 0 && negativeDiff < 0) {
                 y = minVisibleRow.svgNum * cellHeight
-                x = (y - yIntercept) / slope
+                x = Math.abs(slope) === Infinity ? xIntercept : (y - yIntercept) / slope
             }
             else if(positiveDiff < 0 && negativeDiff > 0) {
                 x = (maxVisibleCol.svgNum + 1) * cellWidth
@@ -168,6 +170,7 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
         // added b/c line won't display if any value is 0
         if(x === 0) x = 1
         if(y === 0) y = 1
+        
         return {
             x,
             y,
@@ -175,9 +178,9 @@ export const lineCoordinatesFactory = (columns, rows, cellWidth, cellHeight) => 
     }
 
     const generateLineCoordinates = (startCellSvgX, startCellSvgY, endCellSvgX, endCellSvgY) => {
-        const { slope, yIntercept } = slopeAndInterceptOfThruLine(startCellSvgX, startCellSvgY, endCellSvgX, endCellSvgY)
-        const { x: x1, y: y1 } = redefineLineCoordinates(startCellSvgX, startCellSvgY, slope, yIntercept)
-        const { x: x2, y: y2 } = redefineLineCoordinates(endCellSvgX, endCellSvgY, slope, yIntercept)
+        const { slope, yIntercept, xIntercept } = slopeAndInterceptOfThruLine(startCellSvgX, startCellSvgY, endCellSvgX, endCellSvgY)
+        const { x: x1, y: y1 } = redefineLineCoordinates(startCellSvgX, startCellSvgY, slope, yIntercept, xIntercept)
+        const { x: x2, y: y2 } = redefineLineCoordinates(endCellSvgX, endCellSvgY, slope, yIntercept, xIntercept)
 
         return {
             x1,

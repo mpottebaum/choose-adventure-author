@@ -8,7 +8,6 @@ import {
 } from './index'
 import axios from 'axios'
 import {
-    moveStoryNodeApi,
     createStoryNodeApi,
     updateStoryNodeApi,
     deleteStoryNodeApi,
@@ -86,7 +85,7 @@ export const destroyStoryNode = storyNodeId => dispatch => {
 export const moveStoryNode = (x, y, storyNodeId) => dispatch => {
     axios({
         method: 'PUT',
-        url: moveStoryNodeApi(storyNodeId),
+        url: updateStoryNodeApi(storyNodeId),
         data: {
             story_node: { x, y, }
         },
@@ -130,6 +129,22 @@ export const moveChoice = (x, y, choiceId) => dispatch => {
     })
     .then(resp => {
         dispatch(editChoice(resp.data))
+        dispatch(clearToolbarAction())
+    })
+}
+
+export const drawLine = (nextNodeId, id, isChoice=false) => dispatch => {
+    axios({
+        method: 'PUT',
+        url: isChoice ? updateChoiceApi(id) : updateStoryNodeApi(id),
+        data: {
+            [isChoice ? 'choice' : 'story_node']: {
+                next_node_id: nextNodeId
+            }
+        }
+    })
+    .then(resp => {
+        dispatch(isChoice ? editChoice(resp.data) : editStoryNode(resp.data))
         dispatch(clearToolbarAction())
     })
 }

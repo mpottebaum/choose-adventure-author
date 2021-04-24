@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 import { getStoryNodesApi } from '../constants/apiRoutes'
 import { setStoryNodes } from '../store/storyNodes/actions'
@@ -16,6 +17,7 @@ const Container = styled.div`
 const StoryBuilder = () => {
 
     const dispatch = useDispatch()
+    const { width, height } = useWindowDimensions()
 
     useEffect(() => {
         getStory()
@@ -28,15 +30,31 @@ const StoryBuilder = () => {
             })
     }
 
+    const fullWidth = width - 20
+    const fullHeight = height - 20
+
+    const toolbarHeight = 100
+    const gridHeight = fullHeight - 100
+    
+    const numCols = Math.floor(fullWidth / 121)
+    const numRows = Math.floor(gridHeight / 43)
+
 
     return <Container>
         <Grid
-            width={850}
-            height={650}
-            numCols={7}
-            numRows={15}
+            // width={850}
+            // height={650}
+            // numCols={7}
+            // numRows={15}
+            width={fullWidth}
+            height={gridHeight}
+            numCols={numCols}
+            numRows={numRows}
         />
-        <Toolbar />
+        <Toolbar
+            height={toolbarHeight}
+            width={fullWidth}
+        />
     </Container>
 }
 

@@ -8,6 +8,7 @@ import {
     destroyStoryNode
 } from '../../../store/storyNodes/actions'
 
+import FlexBox from '../../FlexBox'
 import ShowStoryNode from './cmps/ShowStoryNode'
 import EditStoryNode from './cmps/EditStoryNode'
 
@@ -69,26 +70,32 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
     }
 
     return (
-        isEditing ? (
-            <EditStoryNode
-                updatedStoryNode={updatedStoryNode}
-                setUpdatedStoryNode={setUpdatedStoryNode}
-                onSaveCreate={onSaveCreate}
-                onSaveEdit={onSaveEdit}
-                onCancelCreate={onCancelCreate}
-                onCancelEdit={onCancelEdit}
-                storyNode={storyNode}
-                createNode={createNode}
-            />
+        <FlexBox
+            flexDirection='column'
+        >
+            {
+                isEditing ? (
+                    <EditStoryNode
+                        updatedStoryNode={updatedStoryNode}
+                        setUpdatedStoryNode={setUpdatedStoryNode}
+                        onSaveCreate={onSaveCreate}
+                        onSaveEdit={onSaveEdit}
+                        onCancelCreate={onCancelCreate}
+                        onCancelEdit={onCancelEdit}
+                        storyNode={storyNode}
+                        createNode={createNode}
+                    />
 
-        ) : (
-            <ShowStoryNode
-                onClose={onClose}
-                onEdit={() => setIsEditing(true)}
-                onDelete={onDeleteNode}
-                storyNode={storyNode}
-            />
-        )
+                ) : (
+                    <ShowStoryNode
+                        onClose={onClose}
+                        onEdit={() => setIsEditing(true)}
+                        onDelete={onDeleteNode}
+                        storyNode={storyNode}
+                    />
+                )
+            }
+        </FlexBox>
     )
 }
 

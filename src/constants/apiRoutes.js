@@ -11,8 +11,6 @@ export const updateStoryNodeApi = id => BASE_URL + storyNodesApi +  `/${id}`
 
 export const deleteStoryNodeApi = id => BASE_URL + storyNodesApi +  `/${id}`
 
-export const moveStoryNodeApi = id => BASE_URL + storyNodesApi +  `/${id}/move`
-
 export const updateChoiceApi = id => BASE_URL + choicesApi + `/${id}`
 
 export const deleteChoiceApi = id => BASE_URL + choicesApi + `/${id}`

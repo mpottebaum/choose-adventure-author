@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
+import { fontSizes } from '../../../../constants/theme'
 
 import Input from '../../../Input'
 import TextArea from '../../../TextArea'
 import Button from '../../../Button'
 import SelectInput from '../../../SelectInput'
+
+const BtnsContainer = styled.div`
+
+`
 
 const EditStoryNode = ({
     updatedStoryNode,
@@ -73,7 +79,7 @@ const EditStoryNode = ({
     }
 
     const renderChoiceInputs = () => {
-        if(updatedStoryNode.choices_attributes.length > 0) {
+        if(updatedStoryNode.choices_attributes && updatedStoryNode.choices_attributes.length > 0) {
             return updatedStoryNode.choices_attributes.map((choice, i) => {
                 return (
                     <li>
@@ -95,13 +101,13 @@ const EditStoryNode = ({
                 name='name'
                 onChange={e => setUpdatedStoryNode({ ...updatedStoryNode, name: e.target.value })}
                 value={updatedStoryNode.name}
+                fontSize={fontSizes.head}
             />
             <TextArea
                 name='content'
                 onChange={e => setUpdatedStoryNode({ ...updatedStoryNode, content: e.target.value })}
                 value={updatedStoryNode.content}
             />
-            <Button onClick={onToggleIsThruNode}>Switch to {isThruNode ? 'choices node' : 'through node'}</Button>
             <ul>
                 {renderChoiceInputs()}
             </ul>
@@ -110,11 +116,24 @@ const EditStoryNode = ({
             }
             {
                 !isThruNode && (
-                    <Button onClick={() => setUpdatedStoryNode({ ...updatedStoryNode, choices_attributes: [...updatedStoryNode.choices_attributes, {content: ''}]})}>Add Choice</Button>
+                    <Button
+                        onClick={() => setUpdatedStoryNode({ ...updatedStoryNode, choices_attributes: [...updatedStoryNode.choices_attributes, {content: ''}]})}
+                        marginTop={5}
+                    >Add Choice</Button>
                 )
             }
-            <Button onClick={createNode ? onSaveCreate : onSaveEdit}>SAVE</Button>
-            <Button onClick={createNode ? onCancelCreate : onCancelEdit}>CANCEL</Button>
+            <Button
+                onClick={onToggleIsThruNode}
+                marginTop={5}
+                marginBottom={5}
+            >Switch to {isThruNode ? 'choices node' : 'through node'}</Button>
+            <BtnsContainer>
+                <Button
+                    onClick={createNode ? onSaveCreate : onSaveEdit}
+                    marginRight={5}
+                >SAVE</Button>
+                <Button onClick={createNode ? onCancelCreate : onCancelEdit}>CANCEL</Button>
+            </BtnsContainer>
         </>
     )
 }

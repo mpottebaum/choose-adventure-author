@@ -3,6 +3,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './store/index'
 import thunk from 'redux-thunk'
+import './App.css'
 
 import StoryBuilder from './containers/StoryBuilder'
 import Modal from './containers/Modal'

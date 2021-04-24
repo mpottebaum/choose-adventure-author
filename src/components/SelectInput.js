@@ -9,7 +9,7 @@ const SelectInput = ({
 }) => {
     return (
         <select name={name} onChange={onChange} value={value}>
-            <option value={null}>{placeholder}.</option>
+            <option value={0}>{placeholder}.</option>
             {options.map(option => (
                 <option key={option.value} value={option.value}>{option.content}</option>
             ))}

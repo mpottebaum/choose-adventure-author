@@ -2,22 +2,25 @@ import React from 'react'
 import { wrapText } from '../../../helpers/svgHelpers'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModal } from '../../../store/modal/actions'
-import { moveStoryNode, moveChoice } from '../../../store/storyNodes/actions'
+import { moveStoryNode, moveChoice, drawLine } from '../../../store/storyNodes/actions'
 import { selectStoryNode, deselectStoryNode } from '../../../store/selStoryNodeId/actions'
 import { selectChoice, deselectChoice } from '../../../store/selChoiceId/actions'
 import { setStoryNodeCoordinates, clearStoryNodeCoordinates } from '../../../store/newStoryNodeCoordinates/actions'
 import modals from '../../../constants/modals'
 import toolbarActions from '../../../constants/toolbarActions'
+import {
+    TEXT_OFFSET_X,
+    TEXT_OFFSET_Y,
+    TEXT_LINE_CHAR_LIMIT
+} from '../../../constants/grid'
 
 // TO DO:
 // 1. wrapText: add code for first words longer than 17 chars
 
-const TEXT_OFFSET_X = 5
-const TEXT_OFFSET_Y = 4
-const TEXT_LINE_CHAR_LIMIT = 17
 
-const { move: moveAction } = toolbarActions
-const { storyNodeModal, createStoryNodeModal } = modals
+
+const { moveAction, drawLineAction } = toolbarActions
+const { createStoryNodeModal } = modals
 
 const Cell = ({
     gridY,
@@ -53,6 +56,11 @@ const Cell = ({
                         if(selChoiceId) dispatch(moveChoice(gridX, gridY, selChoiceId))
                     }
                     return
+                case drawLineAction:
+                    if(storyNode) {
+                        if(selStoryNodeId) dispatch(drawLine(storyNode.id, selStoryNodeId))
+                        if(selChoiceId) dispatch(drawLine(storyNode.id, selChoiceId, true))
+                    }
                 default:
                     return
             }

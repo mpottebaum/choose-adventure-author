@@ -7,9 +7,14 @@ import {
 import { setToolbarAction, clearToolbarAction } from '../../store/toolbarAction/actions'
 import toolbarActions from '../../constants/toolbarActions'
 
-const { move: moveAction } = toolbarActions
+import SvgToolbar from './cmps/SvgToolbar'
 
-const Toolbar = () => {
+const { moveAction, drawLineAction } = toolbarActions
+
+const Toolbar = ({
+    width,
+    height,
+}) => {
     const { gridViewCenter, selStoryNodeId, selChoiceId, toolbarAction } = useSelector(state => state)
     const dispatch = useDispatch()
 
@@ -21,13 +26,26 @@ const Toolbar = () => {
         }
     }
 
-    return <div>
-        <button onClick={() => dispatch(setGridViewY(gridViewCenter.y + 1))}>^</button>
-        <button onClick={() => dispatch(setGridViewY(gridViewCenter.y - 1))}>v</button>
-        <button onClick={() => dispatch(setGridViewX(gridViewCenter.x - 1))}>&lt;</button>
-        <button onClick={() => dispatch(setGridViewX(gridViewCenter.x + 1))}>&gt;</button>
-        <button onClick={onMoveClick}>MOVE</button>
-    </div>
+    const onDrawLineClick = () => {
+        if(toolbarAction === drawLineAction) {
+            dispatch(clearToolbarAction())
+        } else if(selStoryNodeId || selChoiceId) {
+            dispatch(setToolbarAction(drawLineAction))
+        }
+    }
+
+    return (
+        <SvgToolbar
+            onGridNavUp={() => dispatch(setGridViewY(gridViewCenter.y + 1))}
+            onGridNavDown={() => dispatch(setGridViewY(gridViewCenter.y - 1))}
+            onGridNavLeft={() => dispatch(setGridViewX(gridViewCenter.x - 1))}
+            onGridNavRight={() => dispatch(setGridViewX(gridViewCenter.x + 1))}
+            onMove={onMoveClick}
+            onDrawLine={onDrawLineClick}
+            height={height}
+            width={width}
+        />
+    )
 }
 
 export default Toolbar

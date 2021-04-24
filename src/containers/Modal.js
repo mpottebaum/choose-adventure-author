@@ -1,20 +1,39 @@
 import React from 'react'
+import styled from 'styled-components'
 import { useSelector, useDispatch } from 'react-redux'
 import { closeModal } from '../store/modal/actions'
 import modals from '../constants/modals'
+import { colors } from '../constants/theme'
 
 import ReactModal from 'react-modal'
 
 import StoryNodeModal from '../components/modals/StoryNodeModal'
 import ChoiceModal from '../components/modals/ChoiceModal'
+import Button from '../components/Button'
 
 const { storyNodeModal, createStoryNodeModal, choiceModal } = modals
 
 const customStyles = {
     content: {
-        height: 'fit-content',
+        height: '100%',
+        width: '100%',
+        position: 'initial',
+        padding: '0px',
+        marginRight: '40pt',
+        marginLeft: '40pt',
+        maxWidth: '860px',
+    },
+    overlay: {
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '50pt',
+        paddingBottom: '50pt',
     },
 }
+
+const Content = styled.div`
+    padding: 0px 20px 20px 20px;
+`
 
 const Modal = () => {
     const { modal } = useSelector(state => state)
@@ -55,7 +74,14 @@ const Modal = () => {
             ariaHideApp={false}
             style={customStyles}
         >
-            {renderModal()}
+            <Button
+                onClick={onClose}
+                backgroundColor={colors.white}
+                fontColor={colors.black}
+            >x</Button>
+            <Content>
+                {renderModal()}
+            </Content>
         </ReactModal>
     )
 }

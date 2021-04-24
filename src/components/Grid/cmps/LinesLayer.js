@@ -39,6 +39,7 @@ const LinesLayer = ({
             if(!nextNode) return null
             
             const { x1, y1, x2, y2 } = getLinePositionCoordinates(firstCell, nextNode)
+
             if(!x1 || !y1 || !x2 || !y2) return null
             return (
                 <Line
