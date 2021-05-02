@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { fontSizes } from '../constants/theme'
 
@@ -8,7 +8,6 @@ const Input = styled.textarea`
     outline: none;
     resize: none;
     width: 100%;
-    height: ${({ height }) => height}px;
 `
 
 const ParagraphInput = ({
@@ -19,25 +18,28 @@ const ParagraphInput = ({
 
     const inputRef = useRef(null)
 
-    const [ height, setHeight ] = useState(50)
+    const resizeInputHeight = () => {
+        inputRef.current.style.height = '1px'
+        const scrollHeight = inputRef.current.scrollHeight
+        inputRef.current.style.height = `${scrollHeight}px`
+    }
     
     useEffect(() => {
         inputRef.current.focus()
+        resizeInputHeight()
     }, [])
 
-    useEffect(() => {
-        if(inputRef.current) {
-            setHeight(inputRef.current.scrollHeight)
-        }
-    }, [ value ])
+    const onChangeWithResizeHeight = e => {
+        onChange(e)
+        resizeInputHeight()
+    }
 
     return (
         <Input
-            onChange={onChange}
+            onChange={onChangeWithResizeHeight}
             value={value}
             name={name}
             ref={inputRef}
-            height={height}
         />
     )
 }
