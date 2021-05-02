@@ -70,6 +70,7 @@ export const updateStoryNode = storyNode => dispatch => {
     .then(resp => {
         dispatch(editStoryNode(resp.data))
     })
+    .catch(err => console.log(err))
 }
 
 export const destroyStoryNode = storyNodeId => dispatch => {

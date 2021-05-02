@@ -22,11 +22,14 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
 
     const newStoryNode = {
         name: '',
-        content: '',
+        // content: '',
         next_node_id: null,
         color: null,
         choices_attributes: [],
-        story_id: 6,
+        paragraphs_attributes: [
+            { content: '' }
+        ],
+        story_id: 7,
         x: newStoryNodeCoordinates && newStoryNodeCoordinates.x,
         y: newStoryNodeCoordinates && newStoryNodeCoordinates.y,
 
@@ -36,6 +39,8 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
         ...storyNode,
         choices_attributes: storyNode.choices,
         choices: null,
+        paragraphs_attributes: storyNode.paragraphs,
+        paragraphs: null,
     })
 
     useEffect(() => {

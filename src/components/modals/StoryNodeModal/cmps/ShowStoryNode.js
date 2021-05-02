@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import NextNode from './NextNode'
 import Choices from './Choices'
+import Paragraphs from './Paragraphs'
 
 import Button from '../../../Button'
 import Header from '../../../Header'
@@ -35,7 +36,7 @@ const ShowStoryNode = ({
                 >EDIT</Button>
                 <Button onClick={onDelete}>DELETE</Button>
             </BtnsContainer>
-            <Content>{storyNode && storyNode.content}</Content>
+            <Paragraphs paragraphs={storyNode.paragraphs} />
             <NextNode storyNode={nextNode} />
             <Choices choices={storyNode.choices} />
         </>
