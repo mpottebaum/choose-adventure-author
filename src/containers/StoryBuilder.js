@@ -24,7 +24,7 @@ const StoryBuilder = () => {
     }, [])
 
     const getStory = async () => {
-        axios(getStoryNodesApi(6))
+        axios(getStoryNodesApi(7))
             .then(storyNodesResp => {
                 dispatch(setStoryNodes(storyNodesResp.data))
             })
@@ -34,7 +34,7 @@ const StoryBuilder = () => {
     const fullHeight = height - 20
 
     const toolbarHeight = 100
-    const gridHeight = fullHeight - 100
+    const gridHeight = fullHeight - toolbarHeight
     
     const numCols = Math.floor(fullWidth / 121)
     const numRows = Math.floor(gridHeight / 43)

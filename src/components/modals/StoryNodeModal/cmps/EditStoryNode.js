@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { fontSizes } from '../../../../constants/theme'
 
 import Input from '../../../Input'
-import TextArea from '../../../TextArea'
+import ParagraphInput from '../../../ParagraphInput'
 import Button from '../../../Button'
 import SelectInput from '../../../SelectInput'
 
@@ -95,6 +95,42 @@ const EditStoryNode = ({
         }
     }
 
+    const onParagraphChange = (e, i) => {
+        setUpdatedStoryNode({
+            ...updatedStoryNode,
+            paragraphs_attributes: updatedStoryNode.paragraphs_attributes.map((p, pIndex) => {
+                if(pIndex === i) {
+                    return {
+                        ...p,
+                        content: e.target.value,
+                    }
+                }
+                return p
+            }),
+        })
+    }
+
+
+    const renderParagraphInputs = () => updatedStoryNode.paragraphs_attributes.map((paragraph, i) => (
+        <li>
+            <ParagraphInput
+                onChange={e => onParagraphChange(e, i)}
+                value={paragraph.content}
+                name={`paragraph ${i + 1}`}
+            />
+        </li>
+    ))
+
+    const onAddParagraphClick = () => {
+        setUpdatedStoryNode({
+            ...updatedStoryNode,
+            paragraphs_attributes: [
+                ...updatedStoryNode.paragraphs_attributes,
+                { content: '' },
+            ]
+        })
+    }
+
     return (
         <>
             <Input
@@ -103,11 +139,12 @@ const EditStoryNode = ({
                 value={updatedStoryNode.name}
                 fontSize={fontSizes.head}
             />
-            <TextArea
-                name='content'
-                onChange={e => setUpdatedStoryNode({ ...updatedStoryNode, content: e.target.value })}
-                value={updatedStoryNode.content}
-            />
+            <ul>
+                {renderParagraphInputs()}
+            </ul>
+            <Button
+                onClick={onAddParagraphClick}
+            >Add Paragraph</Button>
             <ul>
                 {renderChoiceInputs()}
             </ul>
