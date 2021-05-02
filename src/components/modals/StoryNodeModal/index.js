@@ -35,13 +35,15 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
 
     }
 
-    const [ updatedStoryNode, setUpdatedStoryNode ] = useState(createNode ? newStoryNode : {
+    const resetUpdatedStoryNode = () => ({
         ...storyNode,
         choices_attributes: storyNode.choices,
         choices: null,
         paragraphs_attributes: storyNode.paragraphs,
         paragraphs: null,
     })
+
+    const [ updatedStoryNode, setUpdatedStoryNode ] = useState(createNode ? newStoryNode : resetUpdatedStoryNode())
 
     useEffect(() => {
         return () => {
@@ -61,7 +63,7 @@ const StoryNodeModal = ({ onClose, createNode=false }) => {
 
     const onCancelEdit = () => {
         setIsEditing(false)
-        setUpdatedStoryNode(storyNode)
+        setUpdatedStoryNode(resetUpdatedStoryNode())
     }
 
     const onCancelCreate = () => {
