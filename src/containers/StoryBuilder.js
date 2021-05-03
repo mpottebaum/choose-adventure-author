@@ -51,10 +51,7 @@ const StoryBuilder = () => {
             numCols={numCols}
             numRows={numRows}
         />
-        <Toolbar
-            height={toolbarHeight}
-            width={fullWidth}
-        />
+        <Toolbar />
     </Container>
 }
 
