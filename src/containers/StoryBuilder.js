@@ -3,6 +3,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import useWindowDimensions from '../hooks/useWindowDimensions'
+import { TOOLBAR_HEIGHT } from '../constants/grid'
 
 import { getStoryNodesApi } from '../constants/apiRoutes'
 import { setStoryNodes } from '../store/storyNodes/actions'
@@ -33,14 +34,14 @@ const StoryBuilder = () => {
     const fullWidth = width - 20
     const fullHeight = height - 20
 
-    const toolbarHeight = 100
-    const gridHeight = fullHeight - toolbarHeight
+    const gridHeight = fullHeight - TOOLBAR_HEIGHT
     
     const numCols = Math.floor(fullWidth / 121)
     const numRows = Math.floor(gridHeight / 43)
 
 
     return <Container>
+        <Toolbar />
         <Grid
             // width={850}
             // height={650}
@@ -50,10 +51,6 @@ const StoryBuilder = () => {
             height={gridHeight}
             numCols={numCols}
             numRows={numRows}
-        />
-        <Toolbar
-            height={toolbarHeight}
-            width={fullWidth}
         />
     </Container>
 }

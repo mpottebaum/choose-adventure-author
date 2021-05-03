@@ -7,7 +7,7 @@ const Container = styled.button`
     margin-right: ${({ marginRight }) => marginRight}px;
     margin-top: ${({ marginTop }) => marginTop}px;
     margin-bottom: ${({ marginBottom }) => marginBottom}px;
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    background-color: ${({ backgroundColor }) => backgroundColor || colors.gray};
     padding: ${({ paddingVert }) => paddingVert}px ${({ paddingHoriz }) => paddingHoriz}px;
     cursor: pointer;
     border-radius: 8px;
