@@ -7,9 +7,20 @@ import {
 import { setToolbarAction, clearToolbarAction } from '../../store/toolbarAction/actions'
 import toolbarActions from '../../constants/toolbarActions'
 import { colors } from '../../constants/theme'
+import { TOOLBAR_HEIGHT } from '../../constants/grid'
+import styled from 'styled-components'
 
 import Arrows from './cmps/Arrows'
 import Button from '../Button'
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    max-height: ${TOOLBAR_HEIGHT}px;
+    height: 100%;
+`
 
 const { moveAction, drawLineAction } = toolbarActions
 
@@ -36,7 +47,7 @@ const Toolbar = () => {
     }
 
     return (
-        <div>
+        <Container>
             <Button
                 onClick={onMoveClick}
                 backgroundColor={buttonColor(moveAction)}
@@ -55,7 +66,7 @@ const Toolbar = () => {
                 onGridNavLeft={() => dispatch(setGridViewX(gridViewCenter.x - 1))}
                 onGridNavRight={() => dispatch(setGridViewX(gridViewCenter.x + 1))}
             />
-        </div>
+        </Container>
     )
 }
 
