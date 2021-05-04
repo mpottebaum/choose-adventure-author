@@ -5,8 +5,7 @@ import rootReducer from './store/index'
 import thunk from 'redux-thunk'
 import './App.css'
 
-import StoryBuilder from './containers/StoryBuilder'
-import Modal from './containers/Modal'
+import Router from './router'
 
 // const store = createStore(
 //     rootReducer,
@@ -22,14 +21,10 @@ const store = createStore(
   )
 )
 
-const App = () => {
-
-    return (
-        <Provider store={store}>
-            <StoryBuilder />
-            <Modal />
-        </Provider>
-    )
-}
+const App = () => (
+  <Provider store={store}>
+      <Router />
+  </Provider>
+)
 
 export default App
