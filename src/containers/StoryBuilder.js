@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { TOOLBAR_HEIGHT } from '../constants/grid'
+import { useParams } from 'react-router-dom'
 
 import { getStoryNodesApi } from '../constants/apiRoutes'
 import { setStoryNodes } from '../store/storyNodes/actions'
@@ -19,13 +20,14 @@ const StoryBuilder = () => {
 
     const dispatch = useDispatch()
     const { width, height } = useWindowDimensions()
+    const { id } = useParams()
 
     useEffect(() => {
         getStory()
     }, [])
 
     const getStory = async () => {
-        axios(getStoryNodesApi(7))
+        axios(getStoryNodesApi(id))
             .then(storyNodesResp => {
                 dispatch(setStoryNodes(storyNodesResp.data))
             })
