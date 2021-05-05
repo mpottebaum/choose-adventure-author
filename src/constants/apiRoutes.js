@@ -17,3 +17,5 @@ export const updateChoiceApi = id => BASE_URL + choicesApi + `/${id}`
 export const deleteChoiceApi = id => BASE_URL + choicesApi + `/${id}`
 
 export const getStoriesApi = authorId => BASE_URL + storiesApi + `?author_id=${authorId}`
+
+export const deleteStoryApi = id => BASE_URL + storiesApi + `/${id}`
