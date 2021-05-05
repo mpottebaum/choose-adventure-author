@@ -9,8 +9,8 @@ import StoryBuilder from '../containers/StoryBuilder'
 
 const Routes = () => {
     const routes = [
-        { path: routePaths.Home, cmp: Dashboard, exact: true },
         { path: routePaths.StoryBuilder, cmp: StoryBuilder, exact: true },
+        { path: routePaths.Home, cmp: Dashboard, exact: true },
     ]
 
     return (

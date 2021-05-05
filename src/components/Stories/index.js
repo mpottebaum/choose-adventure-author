@@ -3,7 +3,11 @@ import React from 'react'
 import FlexBox from '../FlexBox'
 import Story from './cmps/Story'
 
-const Stories = ({ stories, onStoryClick }) => (
+const Stories = ({
+    stories,
+    onViewClick,
+    onDelClick,
+}) => (
     <FlexBox
         flexDirection='column'
         alignItems='center'
@@ -13,7 +17,8 @@ const Stories = ({ stories, onStoryClick }) => (
                 <Story
                     key={story.id}
                     story={story}
-                    onClick={() => onStoryClick(story.id)}
+                    onViewClick={() => onViewClick(story.id)}
+                    onDelClick={() => onDelClick(story.id)}
                 />
             ))}
         </ul>

@@ -42,19 +42,21 @@ const StoryBuilder = () => {
     const numRows = Math.floor(gridHeight / 43)
 
 
-    return <Container>
-        <Toolbar />
-        <Grid
-            // width={850}
-            // height={650}
-            // numCols={7}
-            // numRows={15}
-            width={fullWidth}
-            height={gridHeight}
-            numCols={numCols}
-            numRows={numRows}
-        />
-    </Container>
+    return (
+        <Container>
+            <Toolbar />
+            <Grid
+                // width={850}
+                // height={650}
+                // numCols={7}
+                // numRows={15}
+                width={fullWidth}
+                height={gridHeight}
+                numCols={numCols}
+                numRows={numRows}
+            />
+        </Container>
+    )
 }
 
 export default StoryBuilder

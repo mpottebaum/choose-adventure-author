@@ -18,6 +18,7 @@ const Arrows = ({
           <g
             transform="translate(7.491 1.258)"
             onClick={onGridNavUp}
+            className='toolbar-arrow'
           >
             <rect
               width="30"
@@ -47,6 +48,7 @@ const Arrows = ({
           <g
             transform="matrix(1 0 0 -1 7.491 84.447)"
             onClick={onGridNavDown}
+            className='toolbar-arrow'
           >
             <rect
               width="30"
@@ -76,6 +78,7 @@ const Arrows = ({
           <g
             transform="matrix(0 -1 -1 0 110.402 98.169)"
             onClick={onGridNavRight}
+            className='toolbar-arrow'
            >
             <rect
               width="30"
@@ -105,6 +108,7 @@ const Arrows = ({
           <g
             transform="rotate(-90 45.191 52.978)"
             onClick={onGridNavLeft}
+            className='toolbar-arrow'
            >
             <rect
               width="30"
