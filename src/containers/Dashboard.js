@@ -19,7 +19,7 @@ const Dashboard = () => {
             .then(storiesResp => {
                 setStories(storiesResp.data)
             })
-    })
+    }, [])
 
     const onViewClick = id => history.push(routePaths.StoryBuilder.replace(':id', id))
 
